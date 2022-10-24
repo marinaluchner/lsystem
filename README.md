@@ -1,16 +1,16 @@
-Sample Module Repository
+Turtle Trees
 ========================
 
+Sabs project homepage:
 https://sabs-r3.github.io/software-engineering-project2/01-introduction/index.html
 
----------------
+Tutorial on ``setup.py`` files:
+https://github.com/kennethreitz/setup.py
 
-If you want to learn more about ``setup.py`` files, check out `this repository <https://github.com/kennethreitz/setup.py>`_.
+L-system Java applet: 
+https://rue-a.github.io/L-Systems/
 
-
-
-
-Turtle links:
+Turtle link:
 https://compucademy.net/python-turtle-graphics-and-tkinter-gui-programming/
 
 Tkinter:
