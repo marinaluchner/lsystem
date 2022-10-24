@@ -4,9 +4,6 @@ Turtle Trees
 Sabs project homepage:
 https://sabs-r3.github.io/software-engineering-project2/01-introduction/index.html
 
-Tutorial on ``setup.py`` files:
-https://github.com/kennethreitz/setup.py
-
 L-system Java applet: 
 https://rue-a.github.io/L-Systems/
 
