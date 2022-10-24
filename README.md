@@ -1,10 +1,17 @@
-Sample Module Repository
+Turtle Trees
 ========================
 
-This simple project is an example repo for Python projects.
+Sabs project homepage:
+https://sabs-r3.github.io/software-engineering-project2/01-introduction/index.html
 
-`Learn more <http://www.kennethreitz.org/essays/repository-structure-and-python>`_.
+Tutorial on ``setup.py`` files:
+https://github.com/kennethreitz/setup.py
 
----------------
+L-system Java applet: 
+https://rue-a.github.io/L-Systems/
 
-If you want to learn more about ``setup.py`` files, check out `this repository <https://github.com/kennethreitz/setup.py>`_.
+Turtle link:
+https://compucademy.net/python-turtle-graphics-and-tkinter-gui-programming/
+
+Tkinter:
+https://realpython.com/python-gui-tkinter/#making-your-applications-interactive
