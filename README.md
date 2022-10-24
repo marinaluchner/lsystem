@@ -1,9 +1,7 @@
 Sample Module Repository
 ========================
 
-This simple project is an example repo for Python projects.
-
-`Learn more <http://www.kennethreitz.org/essays/repository-structure-and-python>`_.
+https://sabs-r3.github.io/software-engineering-project2/01-introduction/index.html
 
 ---------------
 
