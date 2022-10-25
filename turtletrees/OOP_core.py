@@ -27,38 +27,54 @@ class App:
         self.frameA = tk.Frame()
         self.frameA.pack(fill=tk.BOTH, side=tk.LEFT, expand=tk.YES)
         self.frameA.columnconfigure([0, 1], minsize=40)
-        self.frameA.rowconfigure([0, 1, 2, 3, 4, 5, 6,7,8], minsize=20) 
+        self.frameA.rowconfigure([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], minsize=20) 
+        
+        
+        # Preselction list
+        self.axiom_label = tk.Label(master=self.frameA, text="Select an organic structure")
+        self.axiom_label.grid(row=1, column=1, columnspan=2, sticky="nesw")
+        self.preselects = tk.OptionMenu(self.frameA, StringVar(),
+                        "Tree", "Fern", "Mushroom", "Organoid", "Custom")
+        self.preselects.grid(row=2, column=1,columnspan=2, sticky="nesw")
         
         # angle input
         self.lbl_angle = tk.Label(master=self.frameA, text="Angle: ")
         self.ent_angle = tk.Entry(master=self.frameA)
         self.ent_angle.insert(0, '20')
-        self.lbl_angle.grid(row=0, column=0, sticky="nesw")
-        self.ent_angle.grid(row=0, column=1, sticky="nesw")
+        self.lbl_angle.grid(row=3, column=0, sticky="nesw")
+        self.ent_angle.grid(row=3, column=1, sticky="nesw")
         
         # length input
         self.lbl_length = tk.Label(master=self.frameA, text="Length: ")
         self.ent_length = tk.Entry(master=self.frameA)
         self.ent_length.insert(0, '15')
-        self.lbl_length.grid(row=1, column=0, sticky="nesw")
-        self.ent_length.grid(row=1, column=1, sticky="nesw")
+        self.lbl_length.grid(row=4, column=0, sticky="nesw")
+        self.ent_length.grid(row=4, column=1, sticky="nesw")
         
         # iteractions slider
         self.lbl_iters = tk.Label(master=self.frameA, text="Iterations: ")
         self.scl_iters = tk.Scale(master=self.frameA, from_=0, to=5, orient=tk.HORIZONTAL)
-        self.lbl_iters.grid(row=2, column=0, sticky="nesw")
-        self.scl_iters.grid(row=2, column=1, sticky="nesw")
+        self.lbl_iters.grid(row=5, column=0, sticky="nesw")
+        self.scl_iters.grid(row=5, column=1, sticky="nesw")
         
-        # Preselction list
-        self.axiom_label = tk.Label(master=self.frameA, text="Select an organic structure")
-        self.axiom_label.grid(row=3, column=1, columnspan=2, sticky="nesw")
-        self.preselects = tk.OptionMenu(self.frameA, StringVar(),
-                        "Tree", "Fern", "Mushroom", "Organoid", "Custom")
-        self.preselects.grid(row=4, column=1,columnspan=2, sticky="nesw")
+        # reproduction rules
+        
+        self.rep_label = tk.Label(master=self.frameA, text="Reproduction Rules")
+        self.rep_label.grid(row=6, column=1,columnspan=2, sticky="nesw")
+        
+        self.lbl_ruleA = tk.Label(master=self.frameA, text="A ->")
+        self.ent_ruleA = tk.Entry(master=self.frameA)
+        self.lbl_ruleA.grid(row=7, column=0, sticky="nesw")
+        self.ent_ruleA.grid(row=7, column=1, sticky="nesw")
+        
+        self.lbl_ruleB = tk.Label(master=self.frameA, text="B ->")
+        self.ent_ruleB = tk.Entry(master=self.frameA)
+        self.lbl_ruleB.grid(row=8, column=0, sticky="nesw")
+        self.ent_ruleB.grid(row=8, column=1, sticky="nesw")
         
         # Go button
         self.btn_go = tk.Button(master=self.frameA, text="Go!", command=self.execute)
-        self.btn_go.grid(row=8, column=1, columnspan=2, sticky="nesw")
+        self.btn_go.grid(row=12, column=1, columnspan=2, sticky="nesw")
     
     def create_turtle_screen(self):
         
