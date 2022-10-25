@@ -17,6 +17,7 @@ def draw(inp_string):
     """
 
     turtle = my_lovely_turtle
+    turtle.reset()
     angle = float(ent_angle.get())
     length = float(ent_length.get())
     """ TODO: documentation """
