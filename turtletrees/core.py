@@ -2,7 +2,9 @@ import tkinter as tk
 import turtle
 import string
 
+# From George and Marina
 # def generator(iter_max, axioms)
+
 
 def draw(inp_string):
     """
@@ -13,10 +15,10 @@ def draw(inp_string):
     inp_string : str
         The string to draw.
     """
-    
-    # turtle = 
-    angle = ent_angle.get()
-    length = ent_length.get()
+
+    turtle = my_lovely_turtle
+    angle = float(ent_angle.get())
+    length = float(ent_length.get())
     """ TODO: documentation """
     for c in inp_string:
         if c in string.ascii_letters:
@@ -27,12 +29,21 @@ def draw(inp_string):
             turtle.right(angle)
 
 
+def execute():
+    """
+    Executes the program.
+    """
+    # inp_string = generator()
+    inp_string = 'AAA++A-A-A-A'
+    draw(inp_string)
+
+
 window = tk.Tk()
 
 # Could automatically generate many widgets using a dictionary
 
 # Create LHS frame for inputs
-frm_input = tk.Frame(master=window, bg='yellow')
+frm_input = tk.Frame(master=window,)
 
 # Create angle input
 frm_angle = tk.Frame(master=frm_input)
@@ -48,7 +59,7 @@ frm_length = tk.Frame(master=frm_input)
 lbl_length = tk.Label(master=frm_length, text="Length: ")
 lbl_length.pack(side=tk.LEFT)
 ent_length = tk.Entry(master=frm_length)
-ent_length.insert(0, '30')
+ent_length.insert(0, '5')
 ent_length.pack(side=tk.RIGHT)
 frm_length.pack(fill=tk.BOTH, expand=tk.YES)
 
@@ -61,8 +72,9 @@ scl_iters.pack(side=tk.RIGHT)
 frm_iters.pack(fill=tk.BOTH, expand=tk.YES)
 
 # Create Go button
-frm_go = tk.Frame(master=frm_input)
-# btn_go = tk.Button(master=frm_go, text="Go!", command=draw(turtle, inp_string, length, angle))
+# frm_go = tk.Frame(master=frm_input)
+btn_go = tk.Button(master=frm_input, text="Go!", command=execute)
+btn_go.pack()
 
 frm_input.pack(fill=tk.BOTH, side=tk.LEFT, expand=tk.YES)
 
