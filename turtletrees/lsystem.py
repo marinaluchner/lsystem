@@ -1,7 +1,7 @@
 import string
 import turtle
 
-
+'''
 def generate(string, max_iter):
     for step in range(max_iter):
         string = reproduce(string)
@@ -21,7 +21,7 @@ def reproduce(string):
 
 
 def draw(t, s, length, angle):
-    '''moves drawing turtle across the canvas'''
+    moves drawing turtle across the canvas
     stack = []
     for character in s:
         if character in string.ascii_letters:
@@ -67,3 +67,79 @@ def main():
 
 
 main()
+
+'''
+
+class OrganicStructure:
+
+    def __init__(self, name):
+        self.name = name
+    
+    def generate(self, string, max_iter, axiom_a, axiom_b):
+        for step in range(max_iter):
+            string = self.reproduce(string, axiom_a, axiom_b)
+        return string
+    
+    def reproduce(self, string, axiom_a, axiom_b):
+        new = ''
+        for character in string:
+            if character == 'A':
+                new += axiom_a
+            elif character == 'B':
+                new += axiom_b
+            else:
+                new += character
+        return new
+
+    def draw(self, t, s, length, angle):
+        #'''moves drawing turtle across the canvas'''
+        stack = []
+        for character in s:
+            if character in string.ascii_letters:
+                t.forward(length)
+            elif character == '-':
+                t.left(angle)
+            elif character == '+':
+                t.right(angle)
+            elif character == '[':
+                pos = t.position()
+                head = t.heading()
+                stack.append((pos, head))
+            elif character == ']':
+                prior_position, prior_heading = stack.pop()
+                t.penup()
+                t.goto(prior_position)
+                t.setheading(prior_heading)
+                t.pendown()
+    
+class Example(OrganicStructure):
+
+    def __init__(self, name):
+        super().__init__(name)
+        
+    def main(self):
+        t = turtle.Turtle()
+        wn = turtle.Screen()
+        wn.bgcolor('black')
+        t.speed('fastest')
+        t.hideturtle()
+        t.color('white')
+        t.pensize(5)
+        t.penup()
+        t.setpos(-10, -10)
+        t.pendown()
+        t.speed(0)
+
+        axiom_a = 'B+[[A]-A]-B[-BA]+A'
+        axiom_b = 'BA'
+        axiom = 'A+[A]B-'
+        length = 10
+        angle = 23
+        max_iter = 6
+
+        self.draw(t, self.generate(axiom, max_iter, axiom_a, axiom_b), length, angle)
+        wn.exitonclick()
+        
+
+Example.main()
+#algea.main()
