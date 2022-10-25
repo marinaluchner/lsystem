@@ -30,5 +30,10 @@ jobs:
       - name: Build executable
         run: |
           pyinstaller --onefile turtletrees/OOP_core.py
+
+      - name: Upload
+        uses: actions/upload-artifact@v3
+        with:
+          path: dist/
           
 
