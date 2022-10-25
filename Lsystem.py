@@ -12,14 +12,15 @@ def reproduce2(s):
     return ''.join([d.get(c) or c for c in s])
 
 
-def  reproduce(s):
+def reproduce(s):
 # Easier to understand than reproduce2()
     new = ''
     for c in s:
         if c == 'A':
-            new += 'B[+A]-A'
+            new += 'B-[[A]+A]+B[+BA]-A'
         elif c == 'B':
-            new += 'B'
+            new += 'BB'
+        else: new += c
     return new
 
 
