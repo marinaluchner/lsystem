@@ -1,14 +1,16 @@
 import string
 import turtle
-#IABCA
+
 def lSysGenerate(s, order):
     for i in range(order):
         s = reproduce(s)
     return s
 
+
 def reproduce2(s):
     d = {'A': 'A-A++A-A'}
     return ''.join([d.get(c) or c for c in s])
+
 
 def  reproduce(s):
 # Easier to understand than reproduce2()
@@ -17,8 +19,9 @@ def  reproduce(s):
         if c == 'A':
             new += 'B[+A]-A'
         elif c == 'B':
-            new += 'BB'
+            new += 'B'
     return new
+
 
 def draw(t, s, length, angle):
     '''moves drawing turtle across the canvas'''
@@ -33,15 +36,14 @@ def draw(t, s, length, angle):
         elif c == '[':
             pos = t.position()
             head = t.heading()
-            stack.append(pos, head)
+            stack.append((pos, head))
         elif c == ']':
-            prior_position = stack[-1][0]
-            prior_heading = stack[-1][1]
+            prior_position, prior_heading = stack.pop()
             t.penup()
             t.goto(prior_position)
-            t.setheading(heading)
+            t.setheading(prior_heading)
             t.pendown()
-            stack.pop()
+            
             
 
 def main():
