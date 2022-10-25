@@ -52,8 +52,9 @@ class App:
         # Preselction list
         self.axiom_label = tk.Label(master=self.frameA, text="Select an organic structure")
         self.axiom_label.grid(row=3, column=1, columnspan=2, sticky="nesw")
-        self.preselects = tk.OptionMenu(self.frameA, StringVar(), "Python", "C", "C++", "Java", "Custom")
-        self.preselects.grid()
+        self.preselects = tk.OptionMenu(self.frameA, StringVar(),
+                        "Tree", "Fern", "Mushroom", "Organoid", "Custom")
+        self.preselects.grid(row=4, column=1,columnspan=2, sticky="nesw")
         
         # Go button
         self.btn_go = tk.Button(master=self.frameA, text="Go!", command=self.execute)
@@ -128,7 +129,6 @@ class App:
         self.my_lovely_turtle.pensize(width=3)
         self.my_lovely_turtle.setheading(90)
         
-    
 
 if __name__ == '__main__':
     root = tk.Tk()
