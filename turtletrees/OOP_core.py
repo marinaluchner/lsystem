@@ -2,7 +2,24 @@ import turtle
 import tkinter as tk
 import string
 
-import lsystem
+
+def generate(string, max_iter):
+    for step in range(max_iter):
+        string = reproduce(string)
+    return string
+
+
+def reproduce(string):
+    new = ''
+    for character in string:
+        if character == 'A':
+            new += 'B+[[A]-A]-B[-BA]+A'
+        elif character == 'B':
+            new += 'BA'
+        else:
+            new += character
+    return new
+
 class App:
     def __init__(self, master):
         
