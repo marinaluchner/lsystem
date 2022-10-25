@@ -1,6 +1,7 @@
 import turtle
 import tkinter as tk
 import string
+#import tk
 
 import lsystem
 class App:
