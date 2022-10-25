@@ -12,9 +12,9 @@ def reproduce(string):
     new = ''
     for character in string:
         if character == 'A':
-            new += 'B[+A]-A'
+            new += 'B+[[A]-A]-B[-BA]+A'
         elif character == 'B':
-            new += 'B'
+            new += 'BA'
         else:
             new += character
     return new
@@ -46,17 +46,19 @@ def main():
     t = turtle.Turtle()
     wn = turtle.Screen()
     wn.bgcolor('black')
-    t.color('orange')
-    t.pensize(1)
+    t.speed('fastest')
+    t.hideturtle()
+    t.color('white')
+    t.pensize(5)
     t.penup()
     t.setpos(-10, -10)
     t.pendown()
     t.speed(0)
 
-    axiom = 'ABAB'
+    axiom = 'A+[A]B-'
     length = 10
-    angle = 36
-    max_iter = 8
+    angle = 23
+    max_iter = 6
 
     # print(generate(axiom, max_iter))
     draw(t, generate(axiom, max_iter), length, angle)
