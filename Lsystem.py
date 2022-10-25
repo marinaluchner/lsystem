@@ -1,6 +1,6 @@
 import string
 import turtle
-IABCA
+#IABCA
 def lSysGenerate(s, order):
     for i in range(order):
         s = reproduce(s)
@@ -15,12 +15,14 @@ def  reproduce(s):
     new = ''
     for c in s:
         if c == 'A':
-            new += 'A-A++A-AB'
+            new += 'B[+A]-A'
         elif c == 'B':
-            new += '--AB'
+            new += 'BB'
     return new
 
 def draw(t, s, length, angle):
+    '''moves drawing turtle across the canvas'''
+    stack = []
     for c in s:
         if c in string.ascii_letters:
             t.forward(length)
@@ -28,6 +30,19 @@ def draw(t, s, length, angle):
             t.left(angle)
         elif c == '+':
             t.right(angle)
+        elif c == '[':
+            pos = t.position()
+            head = t.heading()
+            stack.append(pos, head)
+        elif c == ']':
+            prior_position = stack[-1][0]
+            prior_heading = stack[-1][1]
+            t.penup()
+            t.goto(prior_position)
+            t.setheading(heading)
+            t.pendown()
+            stack.pop()
+            
 
 def main():
     t = turtle.Turtle()
@@ -40,7 +55,7 @@ def main():
     t.pendown()
     t.speed(0)
 
-    axiom = 'AB-B++B'
+    axiom = 'ABAB'
     length = 10
     angle = 56
     iterations = 4
