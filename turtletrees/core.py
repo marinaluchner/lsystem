@@ -5,7 +5,16 @@ import string
 # def generator(iter_max, axioms)
 
 def draw(inp_string):
-    turtle = 
+    """
+    Draws the given string.
+
+    Parameters
+    ----------
+    inp_string : str
+        The string to draw.
+    """
+    
+    # turtle = 
     angle = ent_angle.get()
     length = ent_length.get()
     """ TODO: documentation """
@@ -47,7 +56,7 @@ frm_length.pack(fill=tk.BOTH, expand=tk.YES)
 frm_iters = tk.Frame(master=frm_input)
 lbl_iters = tk.Label(master=frm_iters, text="Iterations: ")
 lbl_iters.pack(side=tk.LEFT)
-scl_iters = tk.Scale(master=frm_iters, from_=0, to=200, orient=tk.HORIZONTAL)
+scl_iters = tk.Scale(master=frm_iters, from_=0, to=5, orient=tk.HORIZONTAL)
 scl_iters.pack(side=tk.RIGHT)
 frm_iters.pack(fill=tk.BOTH, expand=tk.YES)
 
