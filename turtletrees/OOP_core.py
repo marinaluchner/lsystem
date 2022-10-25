@@ -1,11 +1,14 @@
 import turtle
 import tkinter as tk
 import string
-
 class App:
     def __init__(self, master):
         
-        """_summary_
+        """Initialize class App
+        
+        params
+        ============
+        master: window
         """
         self.master = master
         self.master.title("Raw Turtle")
@@ -16,12 +19,12 @@ class App:
     
     def create_widgets(self):
         
-        """_summary_
+        """Function creating and arranging widgets in left panel
         """
         
         self.frameA = tk.Frame()
         self.frameA.pack(fill=tk.BOTH, side=tk.LEFT, expand=tk.YES)
-        self.frameA.columnconfigure([0, 1], minsize=20)
+        self.frameA.columnconfigure([0, 1], minsize=40)
         self.frameA.rowconfigure([0, 1, 2], minsize=20) 
         
         # angle input
@@ -46,11 +49,11 @@ class App:
         
         # Go button
         self.btn_go = tk.Button(master=self.frameA, text="Go!", command=self.execute)
-        self.btn_go.grid(row=3, column=1, sticky="nesw")
+        self.btn_go.grid(row=3, column=1, columnspan=2, sticky="nesw")
     
     def create_turtle_screen(self):
         
-        """_summary_
+        """Function initializing turtle screen
         """
         
         self.frameB = tk.Frame()
@@ -68,7 +71,7 @@ class App:
         
     def draw(self, inp_string):
         
-        """_summary_
+        """Function drawing L-system tree
         """
         
         angle = float(self.ent_angle.get())
@@ -85,7 +88,7 @@ class App:
 
     def execute(self):
         
-        """
+        """ Function generating string based on user inputs
         """
         
         inp_string = "A+B-C+E+E+E+E"
