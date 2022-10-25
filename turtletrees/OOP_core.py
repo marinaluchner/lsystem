@@ -20,6 +20,7 @@ def reproduce(string):
             new += character
     return new
 
+
 class App:
     def __init__(self, master):
         
@@ -123,7 +124,7 @@ class App:
         max_iter = int(self.scl_iters.get())
         #axiom = 
         #inp_string = "A+B-C+E+E+E+E"
-        inp_string = lsystem.generate(string = 'A+[A]B-', max_iter=2)
+        inp_string = generate(string = 'A+[A]B-', max_iter=2)
         self.draw(inp_string, length, angle)
         
     def reset_turtle(self):
