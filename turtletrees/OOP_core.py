@@ -70,19 +70,14 @@ class App:
         self.screen.bgcolor("black")
         
         self.my_lovely_turtle = turtle.RawTurtle(self.screen, shape="turtle")
-        self.my_lovely_turtle.goto(x=0, y=-100)
-        self.my_lovely_turtle.color("white")
-        
-        self.my_lovely_turtle.speed("fastest")
-        self.my_lovely_turtle.pensize(width=3)
-        self.my_lovely_turtle.setheading(90)
+        self.reset_turtle()
         
         
-    
     def draw(self, s, length, angle):
         '''moves drawing turtle across the canvas'''
-        self.my_lovely_turtle.reset()
-        self.my_lovely_turtle.goto(x=0, y=-100)
+
+        self.reset_turtle()
+        
         stack = []
         for character in s:
             if character in string.ascii_letters:
@@ -109,11 +104,20 @@ class App:
         """
         angle = float(self.ent_angle.get())
         length = float(self.ent_length.get())
+        max_iter = int(self.scl_iters.get())
         #axiom = 
-        #max_iter
         #inp_string = "A+B-C+E+E+E+E"
         inp_string = lsystem.generate(string = 'A+[A]B-', max_iter=2)
         self.draw(inp_string, length, angle)
+        
+    def reset_turtle(self):
+        self.my_lovely_turtle.reset()
+        self.my_lovely_turtle.goto(x=0, y=-200)
+        self.my_lovely_turtle.color("white")
+        self.my_lovely_turtle.speed("fastest")
+        self.my_lovely_turtle.pensize(width=2)
+        self.my_lovely_turtle.setheading(90)
+        
     
 
 if __name__ == '__main__':
