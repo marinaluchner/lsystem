@@ -2,7 +2,6 @@ import turtle
 import string
 from tkinter import StringVar, ttk
 import tkinter as tk
-
 import lsystem
 class App:
     def __init__(self, master):
@@ -15,11 +14,11 @@ class App:
         """
         self.master = master
         self.master.title("Raw Turtle")
- 
+
         self.create_widgets()
         self.create_turtle_screen()
-        
-    
+
+
     def create_widgets(self):
         
         """Function creating and arranging widgets in left panel
@@ -64,7 +63,7 @@ class App:
         
         """Function initializing turtle screen
         """
-        
+
         self.frameB = tk.Frame()
         self.frameB.pack(fill=tk.BOTH, side=tk.RIGHT, expand=tk.YES)
         
@@ -78,12 +77,17 @@ class App:
         self.my_lovely_turtle = turtle.RawTurtle(self.screen, shape="turtle")
         self.reset_turtle()
         
-        
+
     def draw(self, s, length, angle):
-        '''moves drawing turtle across the canvas'''
+        '''
+        Either animates the turtle across the canvas
+        or (if self.screen.tracer is switched on and off) 
+        immediately outputs final image.
+        '''
 
         self.reset_turtle()
-        
+        self.screen.tracer(False)
+
         stack = []
         for character in s:
             if character in string.ascii_letters:
@@ -102,7 +106,8 @@ class App:
                 self.my_lovely_turtle.goto(prior_position)
                 self.my_lovely_turtle.setheading(prior_heading)
                 self.my_lovely_turtle.pendown()
-                        
+        self.screen.tracer(False)
+    
 
     def execute(self):
         
@@ -113,6 +118,7 @@ class App:
         max_iter = int(self.scl_iters.get())
         #axiom = 
         #inp_string = "A+B-C+E+E+E+E"
+
         inp_string = lsystem.generate(string = 'A+[A]B-', max_iter=max_iter)
         self.draw(inp_string, length, angle)
         
@@ -120,8 +126,8 @@ class App:
         self.my_lovely_turtle.reset()
         self.my_lovely_turtle.goto(x=0, y=-200)
         self.my_lovely_turtle.color("white")
-        self.my_lovely_turtle.speed("fastest")
-        self.my_lovely_turtle.pensize(width=2)
+        self.my_lovely_turtle.speed(0)
+        self.my_lovely_turtle.pensize(width=3)
         self.my_lovely_turtle.setheading(90)
         
     
