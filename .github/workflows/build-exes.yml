@@ -37,4 +37,5 @@ jobs:
           name: ${{ matrix .os }} build
           path: dist/
           
-
+      - name: Download
+        uses: actions/download-artifact@v3
