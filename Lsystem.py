@@ -1,7 +1,6 @@
 import string
 import turtle
 
-
 def lSysGenerate(s, order):
     for i in range(order):
         s = reproduce(s)
@@ -13,18 +12,20 @@ def reproduce2(s):
     return ''.join([d.get(c) or c for c in s])
 
 
-def reproduce(s):
-    # Easier to understand than reproduce2()
+def  reproduce(s):
+# Easier to understand than reproduce2()
     new = ''
     for c in s:
         if c == 'A':
-            new += 'A-A++A-AB'
+            new += 'B[+A]-A'
         elif c == 'B':
-            new += '--AB'
+            new += 'B'
     return new
 
 
 def draw(t, s, length, angle):
+    '''moves drawing turtle across the canvas'''
+    stack = []
     for c in s:
         if c in string.ascii_letters:
             t.forward(length)
@@ -32,7 +33,18 @@ def draw(t, s, length, angle):
             t.left(angle)
         elif c == '+':
             t.right(angle)
-
+        elif c == '[':
+            pos = t.position()
+            head = t.heading()
+            stack.append((pos, head))
+        elif c == ']':
+            prior_position, prior_heading = stack.pop()
+            t.penup()
+            t.goto(prior_position)
+            t.setheading(prior_heading)
+            t.pendown()
+            
+            
 
 def main():
     t = turtle.Turtle()
@@ -45,7 +57,7 @@ def main():
     t.pendown()
     t.speed(0)
 
-    axiom = 'AB-B++B'
+    axiom = 'ABAB'
     length = 10
     angle = 56
     iterations = 4
@@ -54,6 +66,5 @@ def main():
     draw(t, lSysGenerate(axiom, iterations), length, angle)
 
     wn.exitonclick()
-
-
+    
 main()
