@@ -1,50 +1,46 @@
 import string
 import turtle
 
-def lSysGenerate(s, order):
-    for i in range(order):
-        s = reproduce(s)
-    return s
+
+def generate(string, max_iter):
+    for step in range(max_iter):
+        string = reproduce(string)
+    return string
 
 
-def reproduce2(s):
-    d = {'A': 'A-A++A-A'}
-    return ''.join([d.get(c) or c for c in s])
-
-
-def  reproduce(s):
-# Easier to understand than reproduce2()
+def reproduce(string):
     new = ''
-    for c in s:
-        if c == 'A':
+    for character in string:
+        if character == 'A':
             new += 'B[+A]-A'
-        elif c == 'B':
+        elif character == 'B':
             new += 'B'
+        else:
+            new += character
     return new
 
 
 def draw(t, s, length, angle):
     '''moves drawing turtle across the canvas'''
     stack = []
-    for c in s:
-        if c in string.ascii_letters:
+    for character in s:
+        if character in string.ascii_letters:
             t.forward(length)
-        elif c == '-':
+        elif character == '-':
             t.left(angle)
-        elif c == '+':
+        elif character == '+':
             t.right(angle)
-        elif c == '[':
+        elif character == '[':
             pos = t.position()
             head = t.heading()
             stack.append((pos, head))
-        elif c == ']':
+        elif character == ']':
             prior_position, prior_heading = stack.pop()
             t.penup()
             t.goto(prior_position)
             t.setheading(prior_heading)
             t.pendown()
-            
-            
+
 
 def main():
     t = turtle.Turtle()
@@ -59,12 +55,13 @@ def main():
 
     axiom = 'ABAB'
     length = 10
-    angle = 56
-    iterations = 4
+    angle = 36
+    max_iter = 8
 
-    print(lSysGenerate(axiom, iterations))
-    draw(t, lSysGenerate(axiom, iterations), length, angle)
+    # print(generate(axiom, max_iter))
+    draw(t, generate(axiom, max_iter), length, angle)
 
     wn.exitonclick()
-    
+
+
 main()
