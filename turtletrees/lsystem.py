@@ -2,19 +2,21 @@ import string
 import turtle
 
 
-def generate(string, max_iter):
+A_rule = 'B+[[A]-A]-B[-BA]+A'
+B_rule = 'BA'
+
+def generate(string, max_iter,  A_rule, B_rule):
     for step in range(max_iter):
-        string = reproduce(string)
+        string = reproduce(string, A_rule, B_rule)
     return string
 
-
-def reproduce(string):
+def reproduce(self, string, A_rule, B_rule):
     new = ''
     for character in string:
         if character == 'A':
-            new += 'B+[[A]-A]-B[-BA]+A'
+            new += A_rule
         elif character == 'B':
-            new += 'BA'
+            new += B_rule
         else:
             new += character
     return new

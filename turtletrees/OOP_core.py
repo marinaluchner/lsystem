@@ -41,20 +41,20 @@ class App:
         self.lbl_angle = tk.Label(master=self.frameA, text="Angle: ")
         self.ent_angle = tk.Entry(master=self.frameA)
         self.ent_angle.insert(0, '20')
-        self.lbl_angle.grid(row=3, column=0, sticky="nesw")
+        self.lbl_angle.grid(row=3, column=0, sticky="e")
         self.ent_angle.grid(row=3, column=1, sticky="nesw")
         
         # length input
         self.lbl_length = tk.Label(master=self.frameA, text="Length: ")
         self.ent_length = tk.Entry(master=self.frameA)
         self.ent_length.insert(0, '15')
-        self.lbl_length.grid(row=4, column=0, sticky="nesw")
+        self.lbl_length.grid(row=4, column=0, sticky="e")
         self.ent_length.grid(row=4, column=1, sticky="nesw")
         
         # iteractions slider
         self.lbl_iters = tk.Label(master=self.frameA, text="Iterations: ")
         self.scl_iters = tk.Scale(master=self.frameA, from_=0, to=5, orient=tk.HORIZONTAL)
-        self.lbl_iters.grid(row=5, column=0, sticky="nesw")
+        self.lbl_iters.grid(row=5, column=0, sticky="e")
         self.scl_iters.grid(row=5, column=1, sticky="nesw")
         
         # reproduction rules
@@ -64,12 +64,12 @@ class App:
         
         self.lbl_ruleA = tk.Label(master=self.frameA, text="A ->")
         self.ent_ruleA = tk.Entry(master=self.frameA)
-        self.lbl_ruleA.grid(row=7, column=0, sticky="nesw")
+        self.lbl_ruleA.grid(row=7, column=0, sticky="e")
         self.ent_ruleA.grid(row=7, column=1, sticky="nesw")
         
         self.lbl_ruleB = tk.Label(master=self.frameA, text="B ->")
         self.ent_ruleB = tk.Entry(master=self.frameA)
-        self.lbl_ruleB.grid(row=8, column=0, sticky="nesw")
+        self.lbl_ruleB.grid(row=8, column=0, sticky="e")
         self.ent_ruleB.grid(row=8, column=1, sticky="nesw")
         
         # Go button
@@ -124,18 +124,23 @@ class App:
                 self.my_lovely_turtle.pendown()
     
 
+    
     def execute(self):
         
         """ Function generating string based on user inputs
         """
+        ############## depend on system
         angle = float(self.ent_angle.get())
         length = float(self.ent_length.get())
         max_iter = int(self.scl_iters.get())
-        #axiom = 
+        A_rule = 'B+[[A]-A]-B[-BA]+A'
+        B_rule = 'BA'
+        axiom = 'A+[A]B-'
+        
         #inp_string = "A+B-C+E+E+E+E"
-
-        inp_string = lsystem.generate(string = 'A+[A]B-', max_iter=max_iter)
+        inp_string = lsystem.generate('A+[A]B-', max_iter,  A_rule, B_rule)
         self.draw(inp_string, length, angle)
+        
         
     def reset_turtle(self):
         self.my_lovely_turtle.reset()
@@ -145,6 +150,22 @@ class App:
         self.my_lovely_turtle.pensize(width=3)
         self.my_lovely_turtle.setheading(90)
         
+
+def generate(string, max_iter,  A_rule, B_rule):
+    for step in range(max_iter):
+        string = reproduce(string, A_rule, B_rule)
+    return string
+
+def reproduce(self, string, A_rule, B_rule):
+    new = ''
+    for character in string:
+        if character == 'A':
+            new += A_rule
+        elif character == 'B':
+            new += B_rule
+        else:
+            new += character
+    return new
 
 if __name__ == '__main__':
     root = tk.Tk()
