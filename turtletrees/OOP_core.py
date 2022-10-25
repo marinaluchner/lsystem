@@ -1,6 +1,8 @@
 import turtle
 import tkinter as tk
 import string
+
+import lsystem
 class App:
     def __init__(self, master):
         
@@ -64,36 +66,53 @@ class App:
         self.canvas.pack(expand=tk.YES)
         
         self.screen = turtle.TurtleScreen(self.canvas)
-        self.screen.bgcolor("cyan")
+        self.screen.bgcolor("black")
         
         self.my_lovely_turtle = turtle.RawTurtle(self.screen, shape="turtle")
-        self.my_lovely_turtle.color("green")
+        self.my_lovely_turtle.goto(x=0, y=-100)
+        self.my_lovely_turtle.color("white")
         
-    def draw(self, inp_string):
+        self.my_lovely_turtle.speed("fastest")
+        self.my_lovely_turtle.pensize(width=3)
+        self.my_lovely_turtle.setheading(90)
         
-        """Function drawing L-system tree
-        """
         
-        angle = float(self.ent_angle.get())
-        length = float(self.ent_length.get())
+    
+    def draw(self, s, length, angle):
+        '''moves drawing turtle across the canvas'''
         self.my_lovely_turtle.reset()
-        for c in inp_string:
-            if c in string.ascii_letters:
+        self.my_lovely_turtle.goto(x=0, y=-100)
+        stack = []
+        for character in s:
+            if character in string.ascii_letters:
                 self.my_lovely_turtle.forward(length)
-            elif c == '-':
+            elif character == '-':
                 self.my_lovely_turtle.left(angle)
-            elif c == '+':
+            elif character == '+':
                 self.my_lovely_turtle.right(angle)
-                    
+            elif character == '[':
+                pos = self.my_lovely_turtle.position()
+                head = self.my_lovely_turtle.heading()
+                stack.append((pos, head))
+            elif character == ']':
+                prior_position, prior_heading = stack.pop()
+                self.my_lovely_turtle.penup()
+                self.my_lovely_turtle.goto(prior_position)
+                self.my_lovely_turtle.setheading(prior_heading)
+                self.my_lovely_turtle.pendown()
+                        
 
     def execute(self):
         
         """ Function generating string based on user inputs
         """
-        
-        inp_string = "A+B-C+E+E+E+E"
-        #inp_string = generator()
-        self.draw(inp_string)
+        angle = float(self.ent_angle.get())
+        length = float(self.ent_length.get())
+        #axiom = 
+        #max_iter
+        #inp_string = "A+B-C+E+E+E+E"
+        inp_string = lsystem.generate(string = 'A+[A]B-', max_iter=2)
+        self.draw(inp_string, length, angle)
     
 
 if __name__ == '__main__':
