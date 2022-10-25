@@ -31,12 +31,11 @@ jobs:
         run: |
           pyinstaller --onefile turtletrees/OOP_core.py
 
-      - name: Upload
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ matrix .os }} build
-          path: dist/
-          
-      - name: Download
-        uses: actions/download-artifact@v3
+      # Commented out upload to prevent producing many files (Github files storage limits)
+      # - name: Upload
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: ${{ matrix .os }} build
+      #     path: dist/
+        
 
