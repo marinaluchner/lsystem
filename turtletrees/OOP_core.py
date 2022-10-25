@@ -86,7 +86,6 @@ class App:
         '''
 
         self.reset_turtle()
-        #self.screen.tracer(False)
 
         stack = []
         for character in s:
@@ -106,7 +105,6 @@ class App:
                 self.my_lovely_turtle.goto(prior_position)
                 self.my_lovely_turtle.setheading(prior_heading)
                 self.my_lovely_turtle.pendown()
-        #self.screen.tracer(False)
     
 
     def execute(self):
