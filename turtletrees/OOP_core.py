@@ -1,6 +1,6 @@
 import turtle
 import string
-from tkinter import ttk
+from tkinter import StringVar, ttk
 import tkinter as tk
 
 import lsystem
@@ -28,7 +28,7 @@ class App:
         self.frameA = tk.Frame()
         self.frameA.pack(fill=tk.BOTH, side=tk.LEFT, expand=tk.YES)
         self.frameA.columnconfigure([0, 1], minsize=40)
-        self.frameA.rowconfigure([0, 1, 2, 3, 4, 5], minsize=20) 
+        self.frameA.rowconfigure([0, 1, 2, 3, 4, 5, 6,7,8], minsize=20) 
         
         # angle input
         self.lbl_angle = tk.Label(master=self.frameA, text="Angle: ")
@@ -52,15 +52,13 @@ class App:
         
         # Preselction list
         self.axiom_label = tk.Label(master=self.frameA, text="Select an organic structure")
-        self.axiom_label.grid(row=3, column=1,columnspan=2, sticky="nesw")
-        self.preselects = ttk.Combobox(
-            state="readonly",
-            values=["Python", "C", "C++", "Java", "Custom"])
-        self.preselects.grid(row=4, column=1,columnspan=2, sticky="nesw")
+        self.axiom_label.grid(row=3, column=1, columnspan=2, sticky="nesw")
+        self.preselects = tk.OptionMenu(self.frameA, StringVar(), "Python", "C", "C++", "Java", "Custom")
+        self.preselects.grid()
         
         # Go button
         self.btn_go = tk.Button(master=self.frameA, text="Go!", command=self.execute)
-        self.btn_go.grid(row=5, column=1, columnspan=2, sticky="nesw")
+        self.btn_go.grid(row=8, column=1, columnspan=2, sticky="nesw")
     
     def create_turtle_screen(self):
         
