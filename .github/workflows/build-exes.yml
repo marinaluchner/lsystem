@@ -39,3 +39,6 @@ jobs:
           
       - name: Download
         uses: actions/download-artifact@v3
+
+      - name: 'Echo download path'
+        run: echo ${{steps.download.outputs.download-path}}
