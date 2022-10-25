@@ -12,7 +12,7 @@ def reproduce(string):
     new = ''
     for character in string:
         if character == 'A':
-            new += 'B+[[A]-A]-B[-BA]+A'
+            new += 'B-A+[[A]-A]-B[-BA]+A'
         elif character == 'B':
             new += 'BA'
         else:
