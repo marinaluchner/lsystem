@@ -8,7 +8,6 @@ class App:
     def __init__(self, master):
 
         """Initialize class App
-
         params
         ============
         master: window
@@ -147,6 +146,9 @@ class App:
         angle = float(self.ent_angle.get())
         length = float(self.ent_length.get())
         max_iter = int(self.scl_iters.get())
+        # A_rule = 'B+[[A]-A]-B[-BA]+A'
+        # B_rule = 'BA'
+        # axiom = 'A+[A]B-'
         A_rule = self.ent_ruleA.get()
         B_rule = self.ent_ruleA.get()
         axiom =  self.ent_axm.get()
