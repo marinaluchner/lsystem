@@ -2,7 +2,7 @@ import turtle
 import string
 from tkinter import StringVar, ttk
 import tkinter as tk
-import lsystem
+
 class App:
     def __init__(self, master):
         
@@ -64,13 +64,21 @@ class App:
         
         self.lbl_ruleA = tk.Label(master=self.frameA, text="A ->")
         self.ent_ruleA = tk.Entry(master=self.frameA)
+        self.ent_ruleA.insert(0,'B+[[A]-A]-B[-BA]+A')
         self.lbl_ruleA.grid(row=7, column=0, sticky="e")
         self.ent_ruleA.grid(row=7, column=1, sticky="nesw")
         
         self.lbl_ruleB = tk.Label(master=self.frameA, text="B ->")
         self.ent_ruleB = tk.Entry(master=self.frameA)
+        self.ent_ruleB.insert(0,'BA')
         self.lbl_ruleB.grid(row=8, column=0, sticky="e")
         self.ent_ruleB.grid(row=8, column=1, sticky="nesw")
+        
+        self.lbl_axm = tk.Label(master=self.frameA, text="Initial Conditions")
+        self.ent_axm  = tk.Entry(master=self.frameA)
+        self.ent_axm.insert(0,'A+[A]B-')
+        self.lbl_axm.grid(row=9, column=0, sticky="e")
+        self.ent_axm.grid(row=9, column=1, sticky="nesw")
         
         # Go button
         self.btn_go = tk.Button(master=self.frameA, text="Go!", command=self.execute)
@@ -133,12 +141,16 @@ class App:
         angle = float(self.ent_angle.get())
         length = float(self.ent_length.get())
         max_iter = int(self.scl_iters.get())
-        A_rule = 'B+[[A]-A]-B[-BA]+A'
-        B_rule = 'BA'
-        axiom = 'A+[A]B-'
+        # A_rule = 'B+[[A]-A]-B[-BA]+A'
+        # B_rule = 'BA'
+        # axiom = 'A+[A]B-'
+        A_rule = self.ent_ruleA.get()
+        B_rule = self.ent_ruleA.get()
+        axiom =  self.ent_axm.get()
+        
         
         #inp_string = "A+B-C+E+E+E+E"
-        inp_string = lsystem.generate('A+[A]B-', max_iter,  A_rule, B_rule)
+        inp_string = generate(axiom, max_iter,  A_rule, B_rule)
         self.draw(inp_string, length, angle)
         
         
@@ -156,7 +168,7 @@ def generate(string, max_iter,  A_rule, B_rule):
         string = reproduce(string, A_rule, B_rule)
     return string
 
-def reproduce(self, string, A_rule, B_rule):
+def reproduce(string, A_rule, B_rule):
     new = ''
     for character in string:
         if character == 'A':
@@ -166,6 +178,15 @@ def reproduce(self, string, A_rule, B_rule):
         else:
             new += character
     return new
+
+### Presets
+
+
+
+
+
+
+
 
 if __name__ == '__main__':
     root = tk.Tk()
