@@ -33,17 +33,17 @@ jobs:
     - name: Install Python dependencies
       uses: py-actions/py-dependency-install@v3
         
-    - name: Test with unittest for ubuntu-latest
-      run: |
-        # Automatic test discover runs all test*.py modules inside the test package
-        xvfb-run python -m unittest
-      if: matrix.os == 'ubuntu-latest'
+    # - name: Test with unittest for ubuntu-latest
+    #   run: |
+    #     # Automatic test discover runs all test*.py modules inside the test package
+    #     xvfb-run python -m unittest
+    #   if: matrix.os == 'ubuntu-latest'
 
-    - name: Test with unittest for windows-latest and macos-latest
-      run: |
-       # Automatic test discover runs all test*.py modules inside the test package
-       python -m unittest
-      if: matrix.os != 'ubuntu-latest'
+    # - name: Test with unittest for windows-latest and macos-latest
+    #   run: |
+    #    # Automatic test discover runs all test*.py modules inside the test package
+    #    python -m unittest
+    #   if: matrix.os != 'ubuntu-latest'
 
 
 
