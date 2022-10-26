@@ -1,0 +1,44 @@
+# This workflow will install Python dependencies, run tests and lint with a variety of Python versions
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: Run os tests on Python package
+
+on:
+  push:
+    branches: [ "branches" ]
+  pull_request:
+    branches: [ "branches" ]
+
+jobs:
+  build:
+
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, macos-latest, ubuntu-latest]
+
+    steps:
+    - name: Export display variable
+      run: export DISPLAY=0
+      if: matrix.os == 'ubuntu-latest'     
+
+    - name: Checkout 
+      uses: actions/checkout@v3
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.10"
+
+    - name: Install Python dependencies
+      uses: py-actions/py-dependency-install@v3
+
+    - name: Lint with flake8
+      run: |
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+        
+    - name: Test with unittest
+      run: |
+        # Automatic test discover runs all test*.py modules inside the test package
+        python -m unittest
