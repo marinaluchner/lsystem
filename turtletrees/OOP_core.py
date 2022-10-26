@@ -2,8 +2,6 @@ import turtle
 import tkinter as tk
 import string
 
-import lsystem
-
 
 class App:
     def __init__(self, master):
@@ -67,7 +65,7 @@ class App:
         self.canvas.pack(expand=tk.YES)
 
         self.screen = turtle.TurtleScreen(self.canvas)
-        self.screen.bgcolor("black")
+        self.screen.bgcolor("white")
 
         self.my_lovely_turtle = turtle.RawTurtle(self.screen, shape="turtle")
         self.reset_turtle()
@@ -81,9 +79,10 @@ class App:
         stack = []
 
         for character in s:
-            self.my_lovely_turtle.pensize(width=stack_depth/(2*(len(stack)+1)))
-            self.my_lovely_turtle.pencolor(0, min(1, (len(stack)+0.3)/stack_depth), 0.4)
-
+            penwidth = 5/(0.6*len(stack)+1)
+            self.my_lovely_turtle.pensize(width=penwidth)
+            self.my_lovely_turtle.pencolor(0, min(1, len(stack)/(stack_depth+1)), 0.4) # takes r,g,b values from 0 to 1
+            
             if character in string.ascii_letters:
                 self.my_lovely_turtle.forward(length)
             elif character == '-':
@@ -113,29 +112,46 @@ class App:
         #axiom = 
         #inp_string = "A+B-C+E+E+E+E"
         string = 'A+AB-'
-        inp_string = lsystem.generate(string, max_iter)
+        inp_string = self.generate(string, max_iter)
         self.draw(inp_string, length, angle, self.maxDepth(inp_string))
 
     def reset_turtle(self):
-        self.my_lovely_turtle.reset()
+        self.my_lovely_turtle.hideturtle()
+        self.my_lovely_turtle.penup()
+        # self.my_lovely_turtle.reset()
         self.my_lovely_turtle.goto(x=0, y=-200)
         self.my_lovely_turtle.color("white")
         self.my_lovely_turtle.speed("fastest")
-        self.my_lovely_turtle.pensize(width=2)
         self.my_lovely_turtle.setheading(90)
 
-    def maxDepth(self, inp_string):    
+    def maxDepth(self, inp_string): 
         depthCount = 0
         maxCount = 0
-        for i in inp_string:
-            if i == '[':
+        for char in inp_string:
+            if char== '[':
                 depthCount += 1
-            elif i == ']':
+            elif char == ']':
                 depthCount -= 1
             if depthCount > maxCount:
                 maxCount = depthCount
         return maxCount
 
+    def generate(self,string, max_iter):
+        for step in range(max_iter):
+            string = self.reproduce(string)
+        return string
+
+
+    def reproduce(self,string):
+        new = ''
+        for character in string:
+            if character == 'A':
+                new += 'B-A+[[A]-A]-B[-BA]+A'
+            elif character == 'B':
+                new += 'BA+[A++B]'
+            else:
+                new += character
+        return new
 
 if __name__ == '__main__':
     root = tk.Tk()
