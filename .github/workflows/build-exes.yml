@@ -2,9 +2,9 @@ name: Build executable files for each OS
 
 on:
   push:
-    branches: [ "packaging" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "packaging" ]
+    branches: [ "main" ]
 
 jobs:
   build:
@@ -29,9 +29,9 @@ jobs:
       - name: Build executable
         run: |
           pyinstaller --onefile turtletrees/OOP_core.py
-      # Commented out upload to prevent producing many files (Github files storage limits)
-      # - name: Upload
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: ${{ matrix .os }} build
-      #     path: dist/
+      # Can comment out upload to prevent producing many files (Github files storage limits)
+      - name: Upload
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix .os }} build
+          path: dist/
