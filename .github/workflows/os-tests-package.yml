@@ -5,9 +5,9 @@ name: Run os tests on Python package
 
 on:
   push:
-    branches: [ "branches" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "branches" ]
+    branches: [ "main" ]
 
 jobs:
   build:
