@@ -101,9 +101,8 @@ class App:
         
         self.my_lovely_turtle = turtle.RawTurtle(self.screen, shape="turtle")
         self.reset_turtle()
-        
-
-    def draw(self, s, length, angle):
+    
+    def draw(self, s, length, angle, stack_depth):
         '''
         Either animates the turtle across the canvas
         or (if self.screen.tracer is switched on and off) 
@@ -113,9 +112,15 @@ class App:
         #self.reset_turtle()
         values = {"x_start_position": 0, "y_start_position": -200, "color": "white", "speed": 0, "pensize": 3 , "heading": 9}
         self.autofill_turtle(values)
+        
+        self.screen.tracer(False)
 
         stack = []
         for character in s:
+            penwidth = 5/(0.6*len(stack)+1)
+            self.my_lovely_turtle.pensize(width=penwidth)
+            self.my_lovely_turtle.pencolor(0, min(1, len(stack)/(stack_depth+1)), 0.4) # takes r,g,b values from 0 to 1
+            
             if character in string.ascii_letters:
                 self.my_lovely_turtle.forward(length)
             elif character == '-':
@@ -132,9 +137,9 @@ class App:
                 self.my_lovely_turtle.goto(prior_position)
                 self.my_lovely_turtle.setheading(prior_heading)
                 self.my_lovely_turtle.pendown()
-    
+        self.screen.tracer(True)
 
-    
+
     def execute(self):
         
         """ Function generating string based on user inputs
@@ -147,17 +152,16 @@ class App:
         B_rule = self.ent_ruleA.get()
         axiom =  self.ent_axm.get()
         
-        
-        #inp_string = "A+B-C+E+E+E+E"
         inp_string = generate(axiom, max_iter,  A_rule, B_rule)
-        self.draw(inp_string, length, angle)
-        
-        
+        self.draw(inp_string, length, angle, maxDepth(inp_string) )
+     
     def reset_turtle(self):
         self.my_lovely_turtle.reset()
+        #self.my_lovely_turtle.hideturtle()
+        self.my_lovely_turtle.penup()
         self.my_lovely_turtle.goto(x=0, y=-200)
         self.my_lovely_turtle.color("white")
-        self.my_lovely_turtle.speed(0)
+        self.my_lovely_turtle.speed("fastest")
         self.my_lovely_turtle.pensize(width=3)
         self.my_lovely_turtle.setheading(90)
     
@@ -191,7 +195,17 @@ def reproduce(string, A_rule, B_rule):
             new += character
     return new
 
-### Presets
+def maxDepth(inp_string): 
+  depthCount = 0
+  maxCount = 0
+  for char in inp_string:
+      if char== '[':
+          depthCount += 1
+      elif char == ']':
+          depthCount -= 1
+      if depthCount > maxCount:
+          maxCount = depthCount
+  return maxCount
 
 
 
