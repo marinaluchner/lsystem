@@ -2,11 +2,12 @@ import turtle
 import string
 from tkinter import StringVar, ttk
 import tkinter as tk
+import string
 
 
 class App:
     def __init__(self, master):
-
+        
         """Initialize class App
         params
         ============
@@ -19,11 +20,12 @@ class App:
         self.create_turtle_screen()
     #    self.preset_values()
 
-    def create_widgets(self):
 
+    def create_widgets(self):
+        
         """Function creating and arranging widgets in left panel
         """
-
+        
         self.frameA = tk.Frame()
         self.frameA.pack(fill=tk.BOTH, side=tk.LEFT, expand=tk.YES)
         self.frameA.columnconfigure([0, 1], minsize=40)
@@ -86,40 +88,41 @@ class App:
     
     
     def create_turtle_screen(self):
-
+        
         """Function initializing turtle screen
         """
 
         self.frameB = tk.Frame()
         self.frameB.pack(fill=tk.BOTH, side=tk.RIGHT, expand=tk.YES)
-
+        
         self.canvas = tk.Canvas(master=self.frameB)
         self.canvas.config(width=600, height=500)
         self.canvas.pack(expand=tk.YES)
-
+        
         self.screen = turtle.TurtleScreen(self.canvas)
-        self.screen.bgcolor("white")
-
+        self.screen.bgcolor("black")
+        
         self.my_lovely_turtle = turtle.RawTurtle(self.screen, shape="turtle")
         self.reset_turtle()
-
+    
     def draw(self, s, length, angle, stack_depth):
         '''
         Either animates the turtle across the canvas
         or (if self.screen.tracer is switched on and off) 
         immediately outputs final image.
         '''
+        #self.reset_turtle()
+        values = {"x_start_position": 0, "y_start_position": -200, "color": "white", "speed": 0, "pensize": 3 , "heading": 9}
+        self.autofill_turtle(values)
 
-        self.reset_turtle()
         self.screen.tracer(False)
 
         stack = []
-
         for character in s:
             penwidth = 5/(0.6*len(stack)+1)
             self.my_lovely_turtle.pensize(width=penwidth)
             self.my_lovely_turtle.pencolor(0, min(1, len(stack)/(stack_depth+1)), 0.4) # takes r,g,b values from 0 to 1
-            
+
             if character in string.ascii_letters:
                 self.my_lovely_turtle.forward(length)
             elif character == '-':
@@ -136,13 +139,15 @@ class App:
                 self.my_lovely_turtle.goto(prior_position)
                 self.my_lovely_turtle.setheading(prior_heading)
                 self.my_lovely_turtle.pendown()
+
         self.screen.tracer(True)
 
     
     def execute(self):
+
+        """ Function generating string based on user inputs
         """
-        Function generating string based on user inputs
-        """
+        
         ############## depend on system
         angle = float(self.ent_angle.get())
         length = float(self.ent_length.get())
@@ -157,28 +162,12 @@ class App:
         self.my_lovely_turtle.reset()
         #self.my_lovely_turtle.hideturtle()
         self.my_lovely_turtle.penup()
+        # self.my_lovely_turtle.reset()
         self.my_lovely_turtle.goto(x=0, y=-200)
         self.my_lovely_turtle.color("white")
         self.my_lovely_turtle.speed("fastest")
         self.my_lovely_turtle.pensize(width=3)
         self.my_lovely_turtle.setheading(90)
-     
-# ####### To change
-#     def preset_values(self, preset_dict):
-        
-#         if preset_dict != 'Custom'
-#             self.ent_angle.insert(0, preset_dict['angle'])
-#             self.ent_length.insert(0, '20')
-#             self.scl_iters.insert(0, '20')
-#             self.ent_ruleA.insert(0, '20')
-#             self.ent_ruleB.insert(0, '20')
-#             self.ent_axm.insert(0, '20')
-        
-     
-def generate(string, max_iter,  A_rule, B_rule):
-    for step in range(max_iter):
-        string = reproduce(string, A_rule, B_rule)
-    return string
 
 def maxDepth(inp_string): 
     depthCount = 0
