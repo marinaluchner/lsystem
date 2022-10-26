@@ -17,6 +17,7 @@ class App:
 
         self.create_widgets()
         self.create_turtle_screen()
+    #    self.preset_values()
 
     def create_widgets(self):
 
@@ -146,15 +147,12 @@ class App:
         angle = float(self.ent_angle.get())
         length = float(self.ent_length.get())
         max_iter = int(self.scl_iters.get())
-        # A_rule = 'B+[[A]-A]-B[-BA]+A'
-        # B_rule = 'BA'
-        # axiom = 'A+[A]B-'
         A_rule = self.ent_ruleA.get()
         B_rule = self.ent_ruleA.get()
         axiom =  self.ent_axm.get()
         inp_string = generate(axiom, max_iter,  A_rule, B_rule)
-        self.draw(inp_string, length, angle, self.maxDepth(inp_string) 
-        
+        self.draw(inp_string, length, angle, maxDepth(inp_string))
+    
     def reset_turtle(self):
         self.my_lovely_turtle.reset()
         #self.my_lovely_turtle.hideturtle()
@@ -165,24 +163,34 @@ class App:
         self.my_lovely_turtle.pensize(width=3)
         self.my_lovely_turtle.setheading(90)
      
-
-
+# ####### To change
+#     def preset_values(self, preset_dict):
+        
+#         if preset_dict != 'Custom'
+#             self.ent_angle.insert(0, preset_dict['angle'])
+#             self.ent_length.insert(0, '20')
+#             self.scl_iters.insert(0, '20')
+#             self.ent_ruleA.insert(0, '20')
+#             self.ent_ruleB.insert(0, '20')
+#             self.ent_axm.insert(0, '20')
+        
+     
 def generate(string, max_iter,  A_rule, B_rule):
     for step in range(max_iter):
         string = reproduce(string, A_rule, B_rule)
     return string
 
 def maxDepth(inp_string): 
-  depthCount = 0
-  maxCount = 0
-  for char in inp_string:
-      if char== '[':
-          depthCount += 1
-      elif char == ']':
-          depthCount -= 1
-      if depthCount > maxCount:
-          maxCount = depthCount
-  return maxCount
+    depthCount = 0
+    maxCount = 0
+    for char in inp_string:
+        if char== '[':
+            depthCount += 1
+        elif char == ']':
+            depthCount -= 1
+        if depthCount > maxCount:
+            maxCount = depthCount
+    return maxCount
 
 def reproduce(string, A_rule, B_rule):
     new = ''
@@ -194,6 +202,11 @@ def reproduce(string, A_rule, B_rule):
         else:
             new += character
     return new
+
+
+# {Custom: {'angle': , 'length': , },
+#       Tree: {'angle': , 'length': , },}
+
 
 if __name__ == '__main__':
     root = tk.Tk()
