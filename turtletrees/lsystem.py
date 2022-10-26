@@ -8,7 +8,7 @@ def generate(string, max_iter):
     return string
 
 
-def reproduce(string):
+def reproduce2(string):
     new = ''
     for character in string:
         if character == 'A':
@@ -19,6 +19,8 @@ def reproduce(string):
             new += character
     return new
 
+def reproduce(string):
+    
 
 # def draw(t, s, length, angle):
 #     '''moves drawing turtle across the canvas'''
