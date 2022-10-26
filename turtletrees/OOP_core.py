@@ -2,12 +2,13 @@ import turtle
 import string
 from tkinter import StringVar, ttk
 import tkinter as tk
+import string
+
 
 class App:
     def __init__(self, master):
         
         """Initialize class App
-        
         params
         ============
         master: window
@@ -17,6 +18,7 @@ class App:
 
         self.create_widgets()
         self.create_turtle_screen()
+    #    self.preset_values()
 
 
     def create_widgets(self):
@@ -84,6 +86,7 @@ class App:
         self.btn_go = tk.Button(master=self.frameA, text="Go!", command=self.execute)
         self.btn_go.grid(row=12, column=1, columnspan=2, sticky="nesw")
     
+    
     def create_turtle_screen(self):
         
         """Function initializing turtle screen
@@ -108,7 +111,6 @@ class App:
         or (if self.screen.tracer is switched on and off) 
         immediately outputs final image.
         '''
-
         #self.reset_turtle()
         values = {"x_start_position": 0, "y_start_position": -200, "color": "white", "speed": 0, "pensize": 3 , "heading": 9}
         self.autofill_turtle(values)
@@ -137,54 +139,47 @@ class App:
                 self.my_lovely_turtle.goto(prior_position)
                 self.my_lovely_turtle.setheading(prior_heading)
                 self.my_lovely_turtle.pendown()
+
         self.screen.tracer(True)
 
+    
     def execute(self):
 
         """ Function generating string based on user inputs
         """
+        
         ############## depend on system
         angle = float(self.ent_angle.get())
         length = float(self.ent_length.get())
         max_iter = int(self.scl_iters.get())
         A_rule = self.ent_ruleA.get()
         B_rule = self.ent_ruleA.get()
-        axiom = self.ent_axm.get()
-
+        axiom =  self.ent_axm.get()
         inp_string = generate(axiom, max_iter,  A_rule, B_rule)
-        self.draw(inp_string, length, angle, maxDepth(inp_string) )
-
+        self.draw(inp_string, length, angle, maxDepth(inp_string))
+    
     def reset_turtle(self):
         self.my_lovely_turtle.reset()
         #self.my_lovely_turtle.hideturtle()
         self.my_lovely_turtle.penup()
+        # self.my_lovely_turtle.reset()
         self.my_lovely_turtle.goto(x=0, y=-200)
         self.my_lovely_turtle.color("white")
         self.my_lovely_turtle.speed("fastest")
         self.my_lovely_turtle.pensize(width=3)
         self.my_lovely_turtle.setheading(90)
 
-
-    def autofill_turtle(self, values):
-        '''Enters default parameters for defined organic structures such as algea.
-
-        :param values: dictionary of autofill values per default organic structure
-            e.g. values = {"x_start_position": 0, "y_start_position": -200, "color": "white", "speed": 0, "pensize": 3 , "heading": 9}
-        :returns: 
-        '''
-        self.my_lovely_turtle.reset()
-        self.my_lovely_turtle.goto(x=values["x_start_position"], y=values["y_start_position"])
-        self.my_lovely_turtle.color(values["color"])
-        self.my_lovely_turtle.speed(values["speed"])
-        self.my_lovely_turtle.pensize(width=values["pensize"])
-        self.my_lovely_turtle.setheading(values["heading"])
-
-
-def generate(string, max_iter,  A_rule, B_rule):
-    for step in range(max_iter):
-        string = reproduce(string, A_rule, B_rule)
-    return string
-
+def maxDepth(inp_string): 
+    depthCount = 0
+    maxCount = 0
+    for char in inp_string:
+        if char== '[':
+            depthCount += 1
+        elif char == ']':
+            depthCount -= 1
+        if depthCount > maxCount:
+            maxCount = depthCount
+    return maxCount
 
 def reproduce(string, A_rule, B_rule):
     new = ''
@@ -198,17 +193,8 @@ def reproduce(string, A_rule, B_rule):
     return new
 
 
-def maxDepth(inp_string): 
-    depthCount = 0
-    maxCount = 0
-    for char in inp_string:
-        if char == '[':
-            depthCount += 1
-        elif char == ']':
-            depthCount -= 1
-        if depthCount > maxCount:
-            maxCount = depthCount
-    return maxCount
+# {Custom: {'angle': , 'length': , },
+#       Tree: {'angle': , 'length': , },}
 
 
 if __name__ == '__main__':
