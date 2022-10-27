@@ -44,6 +44,7 @@ class App:
         self.axiom_label = ttk.Label(master=self.frameA, text="Select an organic structure:", font=("Arial", 12))
         self.axiom_label.grid(row=5, column=1, columnspan=2, sticky="nesw")
         self.preselects = tk.OptionMenu(self.frameA, self.clicked, *options, command=self.preset_autofill)
+        # TODO: use ttk.OptionMenu instead, but this makes first dropdown option disappear
         self.preselects.grid(row=6, column=1,columnspan=2, sticky="nesw", pady=10)
         
         # angle input
