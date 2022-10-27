@@ -2,7 +2,6 @@ import turtle
 import string
 from tkinter import StringVar, ttk
 import tkinter as tk
-import string
 
 
 class App:
@@ -181,7 +180,8 @@ def maxDepth(inp_string):
             maxCount = depthCount
     return maxCount
 
-def generate(string, max_iter, A_rule, B_rule):
+
+def generate(string, max_iter,  A_rule, B_rule):
     for step in range(max_iter):
         string = reproduce(string, A_rule, B_rule)
     return string

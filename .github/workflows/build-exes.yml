@@ -29,9 +29,10 @@ jobs:
       - name: Build executable
         run: |
           pyinstaller --onefile turtletrees/OOP_core.py
+          
       # Can comment out upload to prevent producing many files (Github files storage limits)
-      - name: Upload
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ matrix .os }} build
-          path: dist/
+      # - name: Upload
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: ${{ matrix .os }} build
+      #     path: dist/
