@@ -96,53 +96,71 @@ class App:
         
         """Function initializing turtle screen
         """
-        self.frameB = tk.Frame()
-        self.frameB.pack(fill=tk.BOTH, side=tk.RIGHT, expand=tk.YES)
-        
+        # Parent frame
+        self.Parent = tk.Frame()
+        self.Parent.pack(side=tk.RIGHT, expand=tk.YES)
+        self.Parent.grid_rowconfigure(0, weight=1)
+        self.Parent.grid_rowconfigure(1, weight=1)
+
+        # Top frame
+        self.frameB = tk.Frame(self.Parent)
+        self.frameB.grid(sticky='nsew', padx=5, pady=5)
         self.canvas = tk.Canvas(master=self.frameB)
-        self.canvas.config(width=600, height=500)
+        self.canvas.config(width=200, height=200)
         self.canvas.pack(expand=tk.YES)
-        
         self.screen = turtle.TurtleScreen(self.canvas)
         self.screen.bgcolor("black")
-        
         self.my_lovely_turtle = turtle.RawTurtle(self.screen, shape="turtle")
-        self.reset_turtle()
+        self.reset_turtle(turtle_name=self.my_lovely_turtle)
+
+        # Bottom Frame
+        self.frameC = tk.Frame(self.Parent)
+        self.frameC.grid(sticky='nsew', padx=5, pady=5)
+        self.canvasC = tk.Canvas(master=self.frameC)
+        self.canvasC.config(width=200, height=200)
+        self.canvasC.pack(expand=tk.YES)
+        self.screenC = turtle.TurtleScreen(self.canvasC)
+        self.screenC.bgcolor("blue")
+        self.my_bashful_turtle = turtle.RawTurtle(self.screenC, shape="turtle")
+        self.reset_turtle(self.my_bashful_turtle)
+
     
-    def draw(self, s, length, angle, stack_depth):
+    def draw(self, s, length, angle, stack_depth, turtle_name, animated):
         '''
         Either animates the turtle across the canvas
         or (if self.screen.tracer is switched on and off) 
         immediately outputs final image.
         '''
-        self.reset_turtle()
-
-        self.screen.tracer(False)
+        self.reset_turtle(turtle_name)
+        
+        if not animated:
+            self.screen.tracer(False)
 
         stack = []
         for character in s:
             penwidth = 5/(0.6*len(stack)+1)
-            self.my_lovely_turtle.pensize(width=penwidth)
-            self.my_lovely_turtle.pencolor(0, min(1, len(stack)/(stack_depth+1)), 0.4) # takes r,g,b values from 0 to 1
+            turtle_name.pensize(width=penwidth)
+            turtle_name.pencolor(0, min(1, len(stack)/(stack_depth+1)), 0.4) # takes r,g,b values from 0 to 1
 
             if character in string.ascii_letters:
-                self.my_lovely_turtle.forward(length)
+                turtle_name.forward(length)
             elif character == '-':
-                self.my_lovely_turtle.left(angle)
+                turtle_name.left(angle)
             elif character == '+':
-                self.my_lovely_turtle.right(angle)
+                turtle_name.right(angle)
             elif character == '[':
-                pos = self.my_lovely_turtle.position()
-                head = self.my_lovely_turtle.heading()
+                pos = turtle_name.position()
+                head = turtle_name.heading()
                 stack.append((pos, head))
             elif character == ']':
                 prior_position, prior_heading = stack.pop()
-                self.my_lovely_turtle.penup()
-                self.my_lovely_turtle.goto(prior_position)
-                self.my_lovely_turtle.setheading(prior_heading)
-                self.my_lovely_turtle.pendown()
+                turtle_name.penup()
+                turtle_name.goto(prior_position)
+                turtle_name.setheading(prior_heading)
+                turtle_name.pendown()
 
-        self.screen.tracer(True)
+        if not animated:
+            self.screen.tracer(True)
     
     def execute(self):
 
@@ -157,16 +175,17 @@ class App:
         axiom =  self.ent_axm.get()
         # draw based values
         inp_string = generate(axiom, max_iter,  A_rule, B_rule)
-        self.draw(inp_string, length, angle, maxDepth(inp_string))
+        self.draw(inp_string, length, angle, maxDepth(inp_string), self.my_lovely_turtle, True)
+        self.draw(inp_string, length, angle, maxDepth(inp_string), self.my_bashful_turtle, True)
     
-    def reset_turtle(self):
-        self.my_lovely_turtle.reset()
-        self.my_lovely_turtle.penup()
-        self.my_lovely_turtle.goto(x=0, y=-200)
-        self.my_lovely_turtle.color("white")
-        self.my_lovely_turtle.speed("fastest")
-        self.my_lovely_turtle.pensize(width=3)
-        self.my_lovely_turtle.setheading(90)
+    def reset_turtle(self, turtle_name):
+        turtle_name.reset()
+        turtle_name.penup()
+        turtle_name.color("white")
+        turtle_name.speed("fastest")
+        turtle_name.pensize(width=3)
+        turtle_name.goto(x=0, y=-100)
+        turtle_name.setheading(90)
         
     def preset_autofill(self, args):
         
