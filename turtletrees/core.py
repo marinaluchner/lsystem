@@ -91,7 +91,6 @@ class App:
         self.btn_go = tk.Button(master=self.frameA, text="Go!", command=self.execute)
         self.btn_go.grid(row=14, column=1, columnspan=2, sticky="nesw")
     
-    
     def create_turtle_screen(self):
         
         """Function initializing turtle screen
@@ -239,10 +238,12 @@ def maxDepth(inp_string):
             maxCount = depthCount
     return maxCount
 
+
 def generate(string, max_iter, A_rule, B_rule):
     for step in range(max_iter):
         string = reproduce(string, A_rule, B_rule)
     return string
+
 
 def reproduce(string, A_rule, B_rule):
     new = ''
@@ -273,11 +274,11 @@ preset_dict = {'Custom': {'angle': 12,
                         'axiom':'A+[A]B-'},
     
               'Tree': {'angle': 32, 
-                        'length': 20, 
-                        'max_iter': 2,
-                        'ruleA': 'B+[[A]-A]-B[-BA]+A' ,
-                        'ruleB': 'BA',
-                        'axiom':'A+[A]B-'}
+                       'length': 20, 
+                       'max_iter': 4,
+                       'ruleA': 'B+[[A]-A]-B[-BA]+A',
+                       'ruleB': 'BA',
+                       'axiom': 'A+[A]B-'}
               }
 
 
