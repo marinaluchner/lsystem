@@ -3,6 +3,14 @@ import string
 from tkinter import StringVar, ttk
 import tkinter as tk
 
+# TODO: Things to merge
+# - Add theme
+# - Combobox
+# - Title
+# - Accentbutton
+# - pady
+# - font
+
 
 class App:
     def __init__(self, master):
@@ -20,6 +28,7 @@ class App:
         
         self.create_widgets()
         self.create_turtle_screen()
+        self.master.title("Turtletrees")
     #   self.preset_values()
 
     def create_style(self):
@@ -34,62 +43,61 @@ class App:
         """
         
         self.frameA = ttk.Frame()
-        self.frameA.pack(fill=tk.BOTH, side=tk.LEFT, expand=tk.YES)
+        self.frameA.pack(fill=tk.BOTH, side=tk.LEFT, expand=tk.YES, padx=20)
         self.frameA.columnconfigure([0, 1], minsize=40)
         self.frameA.rowconfigure([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], minsize=20) 
         
         
         # Preselection list
         options = ["Tree", "Custom"]
-        self.axiom_label = ttk.Label(master=self.frameA, text="Select an organic structure")
+        self.axiom_label = ttk.Label(master=self.frameA, text="Select an organic structure:", font=("Arial", 12))
         self.axiom_label.grid(row=1, column=1, columnspan=2, sticky="nesw")        
         self.preselects = ttk.Combobox(self.frameA, state="readonly", values=options)
         self.preselects.current(1)
-        self.preselects.grid(row=2, column=1, columnspan=2, sticky="nesw")
+        self.preselects.grid(row=2, column=1, columnspan=2, sticky="nesw", pady=10)
         
         # angle input
         self.lbl_angle = ttk.Label(master=self.frameA, text="Angle: ")
         self.ent_angle = ttk.Entry(master=self.frameA)
         self.ent_angle.insert(0, '20')
-        self.lbl_angle.grid(row=3, column=0, sticky="e")
-        self.ent_angle.grid(row=3, column=1, sticky="nesw")
+        self.lbl_angle.grid(row=3, column=0, sticky="e", pady=5)
+        self.ent_angle.grid(row=3, column=1, sticky="nesw", pady=5)
         
         # length input
         self.lbl_length = ttk.Label(master=self.frameA, text="Length: ")
         self.ent_length = ttk.Entry(master=self.frameA)
         self.ent_length.insert(0, '15')
-        self.lbl_length.grid(row=4, column=0, sticky="e")
-        self.ent_length.grid(row=4, column=1, sticky="nesw")
+        self.lbl_length.grid(row=4, column=0, sticky="e", pady=5)
+        self.ent_length.grid(row=4, column=1, sticky="nesw", pady=5)
         
         # iteractions slider
         self.lbl_iters = ttk.Label(master=self.frameA, text="Iterations: ")
         self.scl_iters = ttk.Scale(master=self.frameA, from_=0, to=5, orient=tk.HORIZONTAL)
-        self.lbl_iters.grid(row=5, column=0, sticky="e")
-        self.scl_iters.grid(row=5, column=1, sticky="nesw")
+        self.lbl_iters.grid(row=5, column=0, sticky="e", pady=5)
+        self.scl_iters.grid(row=5, column=1, sticky="nesw", pady=5)
         
-        # reproduction rules
-        
-        self.rep_label = ttk.Label(master=self.frameA, text="Reproduction Rules")
-        self.rep_label.grid(row=6, column=1,columnspan=2, sticky="nesw")
+        # Reproduction rules
+        self.rep_label = ttk.Label(master=self.frameA, text="Reproduction Rules:", font=("Arial", 12))
+        self.rep_label.grid(row=6, column=1,columnspan=2, sticky="nesw", pady=10)
         
         self.lbl_ruleA = ttk.Label(master=self.frameA, text="A → ")
         self.ent_ruleA = ttk.Entry(master=self.frameA)
         self.ent_ruleA.insert(0,'B+[[A]-A]-B[-BA]+A')
-        self.lbl_ruleA.grid(row=7, column=0, sticky="e")
-        self.ent_ruleA.grid(row=7, column=1, sticky="nesw")
+        self.lbl_ruleA.grid(row=7, column=0, sticky="e", pady=5)
+        self.ent_ruleA.grid(row=7, column=1, sticky="nesw", pady=5)
         
         self.lbl_ruleB = ttk.Label(master=self.frameA, text="B → ")
         self.ent_ruleB = ttk.Entry(master=self.frameA)
         self.ent_ruleB.insert(0,'BA')
-        self.lbl_ruleB.grid(row=8, column=0, sticky="e")
-        self.ent_ruleB.grid(row=8, column=1, sticky="nesw")
+        self.lbl_ruleB.grid(row=8, column=0, sticky="e", pady=5)
+        self.ent_ruleB.grid(row=8, column=1, sticky="nesw", pady=5)
         
         # Axiom 
-        self.lbl_axm = ttk.Label(master=self.frameA, text="Initial Conditions")
+        self.lbl_axm = ttk.Label(master=self.frameA, text="Initial \nConditions", justify=tk.RIGHT)
         self.ent_axm  = ttk.Entry(master=self.frameA)
         self.ent_axm.insert(0,'A+[A]B-')
-        self.lbl_axm.grid(row=9, column=0, sticky="e")
-        self.ent_axm.grid(row=9, column=1, sticky="nesw")
+        self.lbl_axm.grid(row=9, column=0, sticky="e", pady=5)
+        self.ent_axm.grid(row=9, column=1, sticky="nesw", pady=5)
         
         # Go button
         self.btn_go = ttk.Button(master=self.frameA, text="Go!", command=self.execute, style="Accent.TButton")
@@ -257,5 +265,7 @@ if __name__ == '__main__':
     root = tk.Tk()
     root.tk.call("source", "Azure-ttk-theme/azure.tcl")
     root.tk.call("set_theme", "dark")
+    root.option_add('*Font', 'Helvetica 10')
+    # print(font.names())
     app = App(root)
     root.mainloop()
