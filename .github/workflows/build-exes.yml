@@ -28,7 +28,7 @@ jobs:
 
       - name: Build executable
         run: |
-          pyinstaller --onefile turtletrees/OOP_core.py
+          pyinstaller --onefile turtletrees/core.py
           
       # Can comment out upload to prevent producing many files (Github files storage limits)
       # - name: Upload
