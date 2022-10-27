@@ -21,10 +21,12 @@ class App:
         
         self.create_widgets()
         self.create_turtle_screen()
+        self.master.title("Turtletrees")
 
     def create_widgets(self):
         
-        """Function creating and arranging widgets in left panel
+        """
+        Function creating and arranging widgets in left panel
         """
         
         self.frameA = tk.Frame()
@@ -93,7 +95,8 @@ class App:
     
     def create_turtle_screen(self):
         
-        """Function initializing turtle screen
+        """
+        Function initializing turtle screen
         """
         
         
@@ -189,7 +192,6 @@ class App:
             turt.clear()
         
         offset = linspace(dim_canv, max_iter)
-        print(offset)
         for i in range(max_iter):
             spicy_turtles[i].goto(x=offset[i], y=-0.4*dim_canv )
             inp_string = generate(axiom, i,  A_rule, B_rule)
@@ -284,5 +286,9 @@ preset_dict = {'Custom': {'angle': 12,
 
 if __name__ == '__main__':
     root = tk.Tk()
+    # Set theme and font
+    root.tk.call("source", "Azure-ttk-theme/azure.tcl")
+    root.tk.call("set_theme", "dark")
+    root.option_add('*Font', 'Helvetica 10')
     app = App(root)
     root.mainloop()
