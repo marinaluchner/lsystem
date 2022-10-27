@@ -15,10 +15,13 @@ class App:
         """
         self.master = master
         self.master.title("Raw Turtle")
-
+        
+        self.clicked = StringVar()
+        self.clicked.set( "Custom" )
+        
         self.create_widgets()
         self.create_turtle_screen()
-    #    self.preset_values()
+    #   self.preset_values()
 
 
     def create_widgets(self):
@@ -32,11 +35,13 @@ class App:
         self.frameA.rowconfigure([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], minsize=20) 
         
         
-        # Preselction list
+        # # Preselection list
+        clicked = StringVar()
+        clicked.set( "Custom" )
+        options = ["Tree", "Custom"]
         self.axiom_label = tk.Label(master=self.frameA, text="Select an organic structure")
         self.axiom_label.grid(row=1, column=1, columnspan=2, sticky="nesw")
-        self.preselects = tk.OptionMenu(self.frameA, StringVar(),
-                        "Tree", "Fern", "Mushroom", "Organoid", "Custom")
+        self.preselects = tk.OptionMenu(self.frameA, clicked, *options)
         self.preselects.grid(row=2, column=1,columnspan=2, sticky="nesw")
         
         # angle input
@@ -76,6 +81,7 @@ class App:
         self.lbl_ruleB.grid(row=8, column=0, sticky="e")
         self.ent_ruleB.grid(row=8, column=1, sticky="nesw")
         
+        # Axiom 
         self.lbl_axm = tk.Label(master=self.frameA, text="Initial Conditions")
         self.ent_axm  = tk.Entry(master=self.frameA)
         self.ent_axm.insert(0,'A+[A]B-')
@@ -111,9 +117,9 @@ class App:
         or (if self.screen.tracer is switched on and off) 
         immediately outputs final image.
         '''
-        #self.reset_turtle()
-        values = {"x_start_position": 0, "y_start_position": -200, "color": "white", "speed": 0, "pensize": 3 , "heading": 9}
-        self.autofill_turtle(values)
+        self.reset_turtle()
+        #values = {"x_start_position": 0, "y_start_position": -200, "color": "white", "speed": 0, "pensize": 3 , "heading": 9}
+        #self.autofill_turtle(values)
 
         self.screen.tracer(False)
 
@@ -147,14 +153,42 @@ class App:
 
         """ Function generating string based on user inputs
         """
-        
         ############## depend on system
-        angle = float(self.ent_angle.get())
-        length = float(self.ent_length.get())
-        max_iter = int(self.scl_iters.get())
-        A_rule = self.ent_ruleA.get()
-        B_rule = self.ent_ruleA.get()
-        axiom =  self.ent_axm.get()
+        preset_name = str(self.clicked.get())
+        print(preset_name)
+        if preset_name == 'Custom':
+            
+            angle = float(self.ent_angle.get())
+            length = float(self.ent_length.get())
+            max_iter = int(self.scl_iters.get())
+            A_rule = self.ent_ruleA.get()
+            B_rule = self.ent_ruleA.get()
+            axiom =  self.ent_axm.get()
+       
+        else:
+            
+            angle = preset_dict[preset_name]['angle']
+            length = preset_dict[preset_name]['length']
+            max_iter = preset_dict[preset_name]['max_iter']
+            A_rule = preset_dict[preset_name]['ruleA']
+            B_rule = preset_dict[preset_name]['ruleB']
+            axiom =  preset_dict[preset_name]['axiom']
+            
+            self.ent_angle.insert(0,angle)
+            self.ent_scl_iters.insert(0,length)
+            self.ent_ruleA.insert(0,max_iter)
+            self.ent_ruleA.insert(0,A_rule)
+            self.ent_ruleB.insert(0,B_rule)
+            self.ent_axm.insert(0,axiom)
+        
+        # preset_val = self.clicked.get()
+        # angle = float(self.ent_angle.get())
+        # length = float(self.ent_length.get())
+        # max_iter = int(self.scl_iters.get())
+        # A_rule = self.ent_ruleA.get()
+        # B_rule = self.ent_ruleA.get()
+        # axiom = self.ent_axm.get()
+            
         inp_string = generate(axiom, max_iter,  A_rule, B_rule)
         self.draw(inp_string, length, angle, maxDepth(inp_string))
     
@@ -162,12 +196,20 @@ class App:
         self.my_lovely_turtle.reset()
         #self.my_lovely_turtle.hideturtle()
         self.my_lovely_turtle.penup()
-        # self.my_lovely_turtle.reset()
         self.my_lovely_turtle.goto(x=0, y=-200)
         self.my_lovely_turtle.color("white")
         self.my_lovely_turtle.speed("fastest")
         self.my_lovely_turtle.pensize(width=3)
         self.my_lovely_turtle.setheading(90)
+    
+    # def preset_values(self, preset_choice):
+    #     self.ent_angle.insert(0, preset_dict[preset_choice]['angle'])
+    #     self.ent_length.insert(0,preset_dict[preset_choice]['length'])
+    #     self.scl_iters.insert(0,preset_dict[preset_choice]['max_iter'])
+    #     self.ent_ruleA.insert(0,preset_dict[preset_choice]['ruleA'])
+    #     self.ent_ruleB.insert(0,preset_dict[preset_choice]['ruleB'])
+    #     self.ent_axm.insert(0,preset_dict[preset_choice]['axiom'])
+    
 
 def maxDepth(inp_string): 
     depthCount = 0
@@ -198,8 +240,14 @@ def reproduce(string, A_rule, B_rule):
     return new
 
 
-# {Custom: {'angle': , 'length': , },
-#       Tree: {'angle': , 'length': , },}
+preset_dict = {
+              'Tree': {'angle': 32, 
+                        'length': 20, 
+                        'max_iter': 4,
+                        'ruleA': 'B+[[A]-A]-B[-BA]+A' ,
+                        'ruleB': 'BA',
+                        'axiom':'A+[A]B-'}
+              }
 
 
 if __name__ == '__main__':
