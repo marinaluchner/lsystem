@@ -2,7 +2,7 @@ import turtle
 import string
 from tkinter import StringVar, ttk
 import tkinter as tk
-import string
+from ttkwidgets import TickScale
 
 dim_canv = 500
 class App:
@@ -61,8 +61,10 @@ class App:
         self.ent_length.grid(row=8, column=1, sticky="nesw", pady=5)
         
         # iteractions slider
+        self.scl_iters = TickScale(master=self.frameA, orient='horizontal',
+               from_=1, to=5, resolution=1,
+               showvalue=True, length=20)
         self.lbl_iters = ttk.Label(master=self.frameA, text="Iterations: ")
-        self.scl_iters = tk.Scale(master=self.frameA, from_=1, to=5, orient=tk.HORIZONTAL)
         self.lbl_iters.grid(row=9, column=0, sticky="e", pady=5)
         self.scl_iters.grid(row=9, column=1, sticky="nesw", pady=5)
         
@@ -70,13 +72,13 @@ class App:
         self.rep_label = ttk.Label(master=self.frameA, text="Reproduction Rules:", font=("Arial", 12))
         self.rep_label.grid(row=10, column=1,columnspan=2, sticky="nesw", pady=10)
         
-        self.lbl_ruleA = ttk.Label(master=self.frameA, text="A ->")
+        self.lbl_ruleA = ttk.Label(master=self.frameA, text="A → ")
         self.ent_ruleA = ttk.Entry(master=self.frameA)
         self.ent_ruleA.insert(0,'B+[[A]-A]-B[-BA]+A')
         self.lbl_ruleA.grid(row=11, column=0, sticky="e", pady=5)
         self.ent_ruleA.grid(row=11, column=1, sticky="nesw", pady=5)
         
-        self.lbl_ruleB = ttk.Label(master=self.frameA, text="B ->")
+        self.lbl_ruleB = ttk.Label(master=self.frameA, text="B → ")
         self.ent_ruleB = ttk.Entry(master=self.frameA)
         self.ent_ruleB.insert(0,'BA')
         self.lbl_ruleB.grid(row=12, column=0, sticky="e", pady=5)
@@ -113,7 +115,7 @@ class App:
         self.canvas.config(width=dim_canv, height=dim_canv)
         self.canvas.pack(fill = tk.BOTH, expand=tk.YES)
         self.screen = turtle.TurtleScreen(self.canvas)
-        self.screen.bgcolor("black")
+        self.screen.bgcolor("white")
         self.my_spicy_turtle = turtle.RawTurtle(self.screen, shape="turtle", visible=False)
 
         # Bottom Frame
@@ -123,7 +125,7 @@ class App:
         self.canvasC.config(width=dim_canv, height=dim_canv)
         self.canvasC.pack(fill = tk.BOTH, expand=tk.YES)
         self.screenC = turtle.TurtleScreen(self.canvasC)
-        self.screenC.bgcolor("gray")
+        self.screenC.bgcolor("white")
         self.my_ginger_turtle = turtle.RawTurtle(self.screenC, shape="turtle", visible=False)
         self.my_posh_turtle = turtle.RawTurtle(self.screenC, shape="turtle", visible=False)
         self.my_baby_turtle = turtle.RawTurtle(self.screenC, shape="turtle", visible=False)
