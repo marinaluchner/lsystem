@@ -22,7 +22,6 @@ class App:
         self.create_turtle_screen()
     #   self.preset_values()
 
-
     def create_widgets(self):
         
         """Function creating and arranging widgets in left panel
@@ -91,7 +90,6 @@ class App:
         self.btn_go = tk.Button(master=self.frameA, text="Go!", command=self.execute)
         self.btn_go.grid(row=12, column=1, columnspan=2, sticky="nesw")
     
-    
     def create_turtle_screen(self):
         
         """Function initializing turtle screen
@@ -147,7 +145,6 @@ class App:
 
         self.screen.tracer(True)
 
-    
     def execute(self):
 
         """ Function generating string based on user inputs
@@ -222,10 +219,12 @@ def maxDepth(inp_string):
             maxCount = depthCount
     return maxCount
 
+
 def generate(string, max_iter, A_rule, B_rule):
     for step in range(max_iter):
         string = reproduce(string, A_rule, B_rule)
     return string
+
 
 def reproduce(string, A_rule, B_rule):
     new = ''
@@ -241,11 +240,11 @@ def reproduce(string, A_rule, B_rule):
 
 preset_dict = {
               'Tree': {'angle': 32, 
-                        'length': 20, 
-                        'max_iter': 4,
-                        'ruleA': 'B+[[A]-A]-B[-BA]+A' ,
-                        'ruleB': 'BA',
-                        'axiom':'A+[A]B-'}
+                       'length': 20, 
+                       'max_iter': 4,
+                       'ruleA': 'B+[[A]-A]-B[-BA]+A',
+                       'ruleB': 'BA',
+                       'axiom': 'A+[A]B-'}
               }
 
 
