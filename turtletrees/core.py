@@ -4,7 +4,7 @@ from tkinter import StringVar, ttk
 import tkinter as tk
 import string
 
-
+dim_canv = 500
 class App:
     def __init__(self, master):
         
@@ -34,7 +34,7 @@ class App:
         
         # Description 
         self.description = tk.Label(master=self.frameA, 
-                                    text="Select an organic structure n\n\yes or no")
+            text="Welcome to the Turtle Trees Simulator!")
         self.description.grid(row=0, column=0, columnspan=2, rowspan=2, sticky="w")
         
         # Preset values
@@ -60,7 +60,7 @@ class App:
         
         # iteractions slider
         self.lbl_iters = tk.Label(master=self.frameA, text="Iterations: ")
-        self.scl_iters = tk.Scale(master=self.frameA, from_=0, to=5, orient=tk.HORIZONTAL)
+        self.scl_iters = tk.Scale(master=self.frameA, from_=1, to=5, orient=tk.HORIZONTAL)
         self.lbl_iters.grid(row=9, column=0, sticky="e")
         self.scl_iters.grid(row=9, column=1, sticky="nesw")
         
@@ -96,9 +96,11 @@ class App:
         
         """Function initializing turtle screen
         """
+        
+        
         # Parent frame
         self.Parent = tk.Frame()
-        self.Parent.pack(side=tk.RIGHT, expand=tk.YES)
+        self.Parent.pack(fill = tk.BOTH, side=tk.RIGHT, expand=tk.YES)
         self.Parent.grid_rowconfigure(0, weight=1)
         self.Parent.grid_rowconfigure(1, weight=1)
 
@@ -106,36 +108,36 @@ class App:
         self.frameB = tk.Frame(self.Parent)
         self.frameB.grid(sticky='nsew', padx=5, pady=5)
         self.canvas = tk.Canvas(master=self.frameB)
-        self.canvas.config(width=200, height=200)
-        self.canvas.pack(expand=tk.YES)
+        self.canvas.config(width=dim_canv, height=dim_canv)
+        self.canvas.pack(fill = tk.BOTH, expand=tk.YES)
         self.screen = turtle.TurtleScreen(self.canvas)
         self.screen.bgcolor("black")
-        self.my_lovely_turtle = turtle.RawTurtle(self.screen, shape="turtle")
-        self.reset_turtle(turtle_name=self.my_lovely_turtle)
+        self.my_spicy_turtle = turtle.RawTurtle(self.screen, shape="turtle", visible=False)
 
         # Bottom Frame
         self.frameC = tk.Frame(self.Parent)
         self.frameC.grid(sticky='nsew', padx=5, pady=5)
         self.canvasC = tk.Canvas(master=self.frameC)
-        self.canvasC.config(width=200, height=200)
-        self.canvasC.pack(expand=tk.YES)
+        self.canvasC.config(width=dim_canv, height=dim_canv)
+        self.canvasC.pack(fill = tk.BOTH, expand=tk.YES)
         self.screenC = turtle.TurtleScreen(self.canvasC)
-        self.screenC.bgcolor("blue")
-        self.my_bashful_turtle = turtle.RawTurtle(self.screenC, shape="turtle")
-        self.reset_turtle(self.my_bashful_turtle)
-
+        self.screenC.bgcolor("gray")
+        self.my_ginger_turtle = turtle.RawTurtle(self.screenC, shape="turtle", visible=False)
+        self.my_posh_turtle = turtle.RawTurtle(self.screenC, shape="turtle", visible=False)
+        self.my_baby_turtle = turtle.RawTurtle(self.screenC, shape="turtle", visible=False)
+        self.my_scary_turtle = turtle.RawTurtle(self.screenC, shape="turtle", visible=False)
+        self.my_sporty_turtle = turtle.RawTurtle(self.screenC, shape="turtle", visible=False)
+        
     
-    def draw(self, s, length, angle, stack_depth, turtle_name, animated):
+    def draw(self, s, length, angle, stack_depth, turtle_name, animated, i):
         '''
         Either animates the turtle across the canvas
         or (if self.screen.tracer is switched on and off) 
         immediately outputs final image.
         '''
-        self.reset_turtle(turtle_name)
         
-        if not animated:
-            self.screen.tracer(False)
-
+        self.screenC.tracer(False)
+            
         stack = []
         for character in s:
             penwidth = 5/(0.6*len(stack)+1)
@@ -158,33 +160,51 @@ class App:
                 turtle_name.goto(prior_position)
                 turtle_name.setheading(prior_heading)
                 turtle_name.pendown()
-
-        if not animated:
-            self.screen.tracer(True)
+        
+        self.screenC.tracer(True)
+        
+        turtle_name.penup()
     
     def execute(self):
 
         """ Function generating string based on user inputs
         """
+        
         ############## get values from inputs
         angle = float(self.ent_angle.get())
         length = float(self.ent_length.get())
         max_iter = int(self.scl_iters.get())
         A_rule = self.ent_ruleA.get()
-        B_rule = self.ent_ruleA.get()
+        B_rule = self.ent_ruleB.get()
         axiom =  self.ent_axm.get()
+        
+        spicy_turtles = [self.my_ginger_turtle, 
+                         self.my_scary_turtle,
+                         self.my_posh_turtle,
+                         self.my_baby_turtle,
+                         self.my_sporty_turtle,
+                         self.my_spicy_turtle]
         # draw based values
+        for turt in spicy_turtles:
+            self.reset_turtle(turt)
+            turt.clear()
+        
+        offset = linspace(dim_canv, max_iter)
+        print(offset)
+        for i in range(max_iter):
+            spicy_turtles[i].goto(x=offset[i], y=-0.4*dim_canv )
+            inp_string = generate(axiom, i,  A_rule, B_rule)
+            self.draw(inp_string, length, angle, maxDepth(inp_string), spicy_turtles[i], True, i)
+            
         inp_string = generate(axiom, max_iter,  A_rule, B_rule)
-        self.draw(inp_string, length, angle, maxDepth(inp_string), self.my_lovely_turtle, True)
-        self.draw(inp_string, length, angle, maxDepth(inp_string), self.my_bashful_turtle, True)
+        self.draw(inp_string, length, angle, maxDepth(inp_string), self.my_spicy_turtle, False, 0)
     
     def reset_turtle(self, turtle_name):
-        turtle_name.reset()
         turtle_name.penup()
-        turtle_name.color("white")
+        #turtle_name.hideturtle()
         turtle_name.speed("fastest")
         turtle_name.pensize(width=3)
-        turtle_name.goto(x=0, y=-100)
+        turtle_name.goto(x=0, y= -0.4*dim_canv)
         turtle_name.setheading(90)
         
     def preset_autofill(self, args):
@@ -235,17 +255,26 @@ def reproduce(string, A_rule, B_rule):
             new += character
     return new
 
+def linspace(canv_dim, max_iter):
+    if max_iter < 2:
+        return [0]
+    else:
+        a = -0.5*canv_dim + 40
+        b = 0.5*canv_dim - 40
+        diff = (b-a)/(max_iter-1)
+        return [diff*i + a for i in range(max_iter)]
 
-preset_dict = {'Custom': {'angle': 32, 
-                        'length': 20, 
-                        'max_iter': 1,
+
+preset_dict = {'Custom': {'angle': 12, 
+                        'length': 10, 
+                        'max_iter': 2,
                         'ruleA': 'B+[[A]-A]-B[-BA]+A' ,
                         'ruleB': 'BA',
                         'axiom':'A+[A]B-'},
     
               'Tree': {'angle': 32, 
                         'length': 20, 
-                        'max_iter': 1,
+                        'max_iter': 2,
                         'ruleA': 'B+[[A]-A]-B[-BA]+A' ,
                         'ruleB': 'BA',
                         'axiom':'A+[A]B-'}
