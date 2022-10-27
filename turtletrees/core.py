@@ -269,22 +269,44 @@ def linspace(canv_dim, max_iter):
         b = 0.5*canv_dim - 40
         diff = (b-a)/(max_iter-1)
         return [diff*i + a for i in range(max_iter)]
-
-
-preset_dict = {'Custom': {'angle': 12, 
-                        'length': 10, 
-                        'max_iter': 2,
-                        'ruleA': 'B+[[A]-A]-B[-BA]+A' ,
-                        'ruleB': 'BA',
-                        'axiom':'A+[A]B-'},
-    
-              'Tree': {'angle': 32, 
-                       'length': 20, 
-                       'max_iter': 4,
-                       'ruleA': 'B+[[A]-A]-B[-BA]+A',
-                       'ruleB': 'BA',
-                       'axiom': 'A+[A]B-'}
-              }
+        
+preset_dict = {'Custom':   {'angle': 12,
+                            'length': 10,
+                            'max_iter': 2,
+                            'ruleA': 'B+[[A]-A]-B[-BA]+A',
+                            'ruleB': 'BA',
+                            'axiom': 'A+[A]B-'},
+                'Tree':    {'angle': 32,
+                            'length': 20,
+                            'max_iter': 4,
+                            'ruleA': 'B+[[A]-A]-B[-BA]+A',
+                            'ruleB': 'BA',
+                            'axiom': 'A+[A]B-'},
+                'Algea':   {'angle': 22.5, 
+                            'length': 10,
+                            'max_iter': 4,
+                            'ruleA': 'AA-[-A+A+A]+[+A-A-A]',
+                            'ruleB': 'B',
+                            'axiom': 'A',
+                            'start_color': (0, 0.6, 0.3),
+                            'final_color': (0.6, 1, 1)},
+                'Wheat':   {'angle': 10, 
+                            'length': 10,
+                            'max_iter': 4,
+                            'ruleA': 'B[[+A]+B][[-A]-B]',
+                            'ruleB': 'A[+B][-B]',
+                            'axiom': 'AB',
+                            'start_color': (0.8, 0.4, 0),
+                            'final_color': (1, 1, 0.6)},
+                'Bush':    {'angle': 25,
+                            'length': 10,
+                            'max_iter': 5,
+                            'ruleA': 'A[-A][+[+A]][-[-A]]',
+                            'ruleB': 'B[-B][+[+A]][-[-B]]',
+                            'axiom': 'AB',
+                            'start_color': (0.6, 0.3, 0),
+                            'final_color': (0.4, 1, 0.4)}
+}
 
 
 if __name__ == '__main__':
