@@ -1,6 +1,4 @@
-import pyautogui
-print("Basic test running")
+from turtletrees.OOP_core import App
 
+from unittest.mock import Mock
 
-x, y = pyautogui.locateCenterOnScreen('calc7key.png')
-pyautogui.click(x, y)
