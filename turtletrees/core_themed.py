@@ -3,11 +3,6 @@ import string
 from tkinter import StringVar, ttk
 import tkinter as tk
 
-# TODO: Things to merge
-# - Combobox
-# - font
-
-
 class App:
     def __init__(self, master):
         

@@ -36,7 +36,7 @@ class App:
         
         # Description 
         self.description = ttk.Label(master=self.frameA, 
-            text="Welcome to the Turtle Trees Simulator!")
+            text="Welcome to the Turtle Trees Simulator!", font=("Arial", 13), justify=tk.CENTER)
         self.description.grid(row=0, column=0, columnspan=2, rowspan=2, sticky="w")
         
         # Preset values
