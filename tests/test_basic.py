@@ -17,7 +17,7 @@ class TheoryTest(unittest.TestCase):
         self.assertEqual(core.generate('A+[A]B-', 2, 'B+[[A]-A]-B[-BA]+A', 'BA'),
                          'BA+[[B+[[A]-A]-B[-BA]+A]-B+[[A]-A]-B[-BA]+A]-BA[-BAB+[[A]-A]-B[-BA]+A]+B+[[A]-A]-B[-BA]+A+[BA+[[B+[[A]-A]-B[-BA]+A]-B+[[A]-A]-B[-BA]+A]-BA[-BAB+[[A]-A]-B[-BA]+A]+B+[[A]-A]-B[-BA]+A]BAB+[[A]-A]-B[-BA]+A-')
    
-        # Checks that changing inp_string is same as running generate function for more iterations
+        # Checks that running for n+1 iterations is same as running once on the output of n iterations
         n = random.randint(1, 6)
         inp_string = core.generate('A+[A]B-', n, 'B+[[A]-A]-B[-BA]+A', 'BA')
         self.assertEqual(core.generate(inp_string, 1, 'B+[[A]-A]-B[-BA]+A', 'BA'),
