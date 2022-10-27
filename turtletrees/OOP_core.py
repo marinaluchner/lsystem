@@ -180,6 +180,12 @@ def maxDepth(inp_string):
             maxCount = depthCount
     return maxCount
 
+def generate(string, max_iter,  A_rule, B_rule):
+    for step in range(max_iter):
+        string = reproduce(string, A_rule, B_rule)
+    return string
+
+
 def reproduce(string, A_rule, B_rule):
     new = ''
     for character in string:
