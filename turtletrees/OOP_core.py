@@ -2,7 +2,6 @@ import turtle
 import string
 from tkinter import StringVar, ttk
 import tkinter as tk
-import string
 
 
 class App:
