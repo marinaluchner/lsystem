@@ -4,10 +4,7 @@ from tkinter import StringVar, ttk
 import tkinter as tk
 
 # TODO: Things to merge
-# - Add theme
 # - Combobox
-# - Accentbutton
-# - pady
 # - font
 
 
