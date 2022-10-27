@@ -6,7 +6,6 @@ import tkinter as tk
 # TODO: Things to merge
 # - Add theme
 # - Combobox
-# - Title
 # - Accentbutton
 # - pady
 # - font
@@ -30,12 +29,6 @@ class App:
         self.create_turtle_screen()
         self.master.title("Turtletrees")
     #   self.preset_values()
-
-    def create_style(self):
-        style = ttk.Style(root)
-        root.tk.call("source", "Azure-ttk-theme/azure.tcl")
-        root.tk.call("set_theme", "light")
-        style.theme_use('azure')
 
     def create_widgets(self):
         
