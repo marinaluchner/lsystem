@@ -40,6 +40,7 @@ class App:
         self.description.grid(row=0, column=0, columnspan=2, rowspan=2, sticky="w")
         
         # Preset values
+        options = ["Tree", "Custom"]
         options = ["Tree", "Custom", "Algea", "Wheat", "Bush"]
         self.axiom_label = ttk.Label(master=self.frameA, text="Select an organic structure:", font=("Arial", 12))
         self.axiom_label.grid(row=5, column=1, columnspan=2, sticky="nesw")
@@ -304,8 +305,8 @@ preset_dict = {'Custom':   {'angle': 12,
                             'ruleB': 'BA',
                             'axiom': 'A+[A]B-',
                             'start_color': (0, 0.6, 0.3),
-                            'final_color': (0.6, 1, 1)},
-                'Algae':   {'angle': 22.5, 
+                            'final_oelor': (0.6, 1, 1)},
+                'Algea':   {'angle': 22.5, 
                             'length': 10,
                             'max_iter': 4,
                             'ruleA': 'AA-[-A+A+A]+[+A-A-A]',
@@ -337,6 +338,6 @@ if __name__ == '__main__':
     # Set theme and font
     root.tk.call("source", "Azure-ttk-theme-main/azure.tcl")
     root.tk.call("set_theme", "dark")
-    root.option_add('*Font', 'Helvetica 10')
+    root.option_add('*Font', 'Helvetica 12')
     app = App(root)
     root.mainloop()

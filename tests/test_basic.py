@@ -1,6 +1,8 @@
 from turtletrees import core
+from turtletrees.core import App
 import unittest
 import random
+import tkinter as tk
 
 
 class TheoryTest(unittest.TestCase):
@@ -30,3 +32,6 @@ class TheoryTest(unittest.TestCase):
 
 class AppTest(unittest.TestCase):
     
+    def test_create(self):
+        root = tk.Tk()
+        app = App(root)
