@@ -30,8 +30,8 @@ class App:
         """
         
         self.frameA = tk.Frame()
-        self.frameA.pack(fill=tk.BOTH, side=tk.LEFT, padx=20)
-        self.frameA.rowconfigure(list(range(1,16)), minsize=20) 
+        self.frameA.pack(fill=tk.BOTH, side=tk.LEFT, padx=10)
+        self.frameA.rowconfigure(list(range(1,15)), minsize=20)
 
         self.frameA_upper = tk.Frame(master=self.frameA)
         self.frameA_upper.grid(row=0, sticky="w") 
@@ -43,32 +43,38 @@ class App:
 
         # Description
         self.lbl_title = ttk.Label(master=self.frameA_upper,
-                                     text="Welcome to the Turtle Trees Simulator!\n", font=("Helvetica", 15), justify=tk.CENTER)
+                                   text="Welcome to the Turtle Trees Simulator!\n",
+                                   font=("Helvetica", 15), justify=tk.CENTER)
         self.lbl_title.grid(row=0, column=1, rowspan=2, sticky="w")
 
         self.lbl_description = ttk.Label(master=self.frameA_upper,
                                          wraplength=350,
-                                         text="This models different organic systems using L-systems. Select an example structure, or play with your own custom system!\n")
+                                         text="This models different organic systems using L-systems. Select an example structure, or play with your own custom system!\nThen hit GOOOOOOO!")
+
         self.lbl_description.grid(row=4, column=1, rowspan=2, sticky="w")
 
-        self.lbl_variables = ttk.Label(master=self.frameA_upper,
-                                       wraplength=400,
-                                       text="Angle (°): Angle between old and new branches\nLength: Branch length\nIterations: Number of growth steps",
-                                       font=("Helvetica", 12, "italic"))
-        self.lbl_variables.grid(row=8, column=1, rowspan=2, sticky="w")
+
+        self.lbl_screen = ttk.Label(master=self.frameA_upper,
+                                    wraplength=350,
+                                    text="Top: My spicy turtle drawing the last iteration of the L-system.\nBottom: Each of the iterations before.",
+                                    font=("Helvetica", 12))
+
+        self.lbl_screen.grid(row=8, column=1, rowspan=2, sticky="w")
 
         # Preset values
 
         options = ["Tree", "Custom", "Algae", "Wheat", "Bush"]
-        self.axiom_label = ttk.Label(master=self.frameA_lower, text="Select an organic structure:", font=("Arial", 12))
+        self.axiom_label = ttk.Label(master=self.frameA_lower,
+                                     text="Select an organic structure:",
+                                     font=("Arial", 12))
         self.axiom_label.grid(row=5, column=1, columnspan=2, sticky="nesw")
         self.preselects = tk.OptionMenu(self.frameA_lower, self.clicked, *options, command=self.preset_autofill)
         # TODO: use ttk.OptionMenu instead, but this makes first dropdown option disappear
         self.preselects.config(fg="gray")
-        self.preselects.grid(row=6, column=1, columnspan=2, sticky="nesw", pady=10)
+        self.preselects.grid(row=6, column=1, columnspan=2, sticky="nesw", pady=0)
 
         # angle input
-        self.lbl_angle = ttk.Label(master=self.frameA_lower, text="Angle: ")
+        self.lbl_angle = ttk.Label(master=self.frameA_lower, text="Branch angle: ")
         self.ent_angle = ttk.Entry(master=self.frameA_lower)
         self.ent_angle.insert(0, '20')
         self.lbl_angle.grid(row=7, column=0, sticky="e", pady=5)
@@ -83,8 +89,8 @@ class App:
 
         # iteractions slider
         self.scl_iters = TickScale(master=self.frameA_lower, orient='horizontal',
-               from_=1, to=5, resolution=1,
-               showvalue=True, length=20)
+                                   from_=1, to=5, resolution=1,
+                                   showvalue=True, length=20)
         self.lbl_iters = ttk.Label(master=self.frameA_lower, text="Iterations: ")
         self.lbl_iters.grid(row=9, column=0, sticky="e", pady=5)
         self.scl_iters.grid(row=9, column=1, sticky="nesw", pady=5)
@@ -247,6 +253,11 @@ class App:
             self.error_caption.config(text=
                 "Invalid initial conditions entry.\n Please only use the following characters: 'A', 'B' ,'+', '-', '[', ']'.")
             return
+        if angle < 0 or length < 0:
+            self.error_caption.config(text=
+                'Only positive length and angle are accepted')
+            return
+
 
         preset_name = str(self.clicked.get())
         presets = preset_dict[preset_name]
