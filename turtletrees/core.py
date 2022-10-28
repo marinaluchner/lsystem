@@ -399,7 +399,7 @@ preset_dict = {'Custom':   {'angle': 12,
 if __name__ == '__main__':
     root = tk.Tk()
     # Set theme and font
-    root.tk.call("source", "Azure-ttk-theme-main/azure.tcl")
+    root.tk.call("source", "../Azure-ttk-theme-main/azure.tcl")
     root.tk.call("set_theme", "dark")
     root.option_add('*Font', 'Helvetica 12')
     app = App(root)
