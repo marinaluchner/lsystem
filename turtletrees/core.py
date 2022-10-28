@@ -59,7 +59,7 @@ class App:
 
         # Preset values
 
-        options = ["Tree", "Custom", "Algae", "Wheat", "Bush"]
+        options = ["Tree", "Algae", "Wheat", "Bush", "Custom"]
         self.axiom_label = ttk.Label(master=self.frameA_lower, text="Select an organic structure:", font=("Arial", 12))
         self.axiom_label.grid(row=5, column=1, columnspan=2, sticky="nesw")
         self.preselects = tk.OptionMenu(self.frameA_lower, self.clicked, *options, command=self.preset_autofill)
