@@ -64,6 +64,7 @@ class App:
         self.axiom_label.grid(row=5, column=1, columnspan=2, sticky="nesw")
         self.preselects = tk.OptionMenu(self.frameA_lower, self.clicked, *options, command=self.preset_autofill)
         # TODO: use ttk.OptionMenu instead, but this makes first dropdown option disappear
+        self.preselects.config(fg="gray")
         self.preselects.grid(row=6, column=1,columnspan=2, sticky="nesw", pady=10)
         
         # angle input
@@ -121,33 +122,33 @@ class App:
         self.error_caption.grid(row=15, column=1, columnspan=2, sticky="nesw", pady=10)
     
     def create_turtle_screen(self):
-        
         """
         Function initializing turtle screen
         """
-        
         # Parent frame
-        self.Parent = tk.Frame()
-        self.Parent.pack(fill = tk.BOTH, side=tk.RIGHT, expand=tk.YES)
-        self.Parent.grid_rowconfigure(0, weight=1)
-        self.Parent.grid_rowconfigure(1, weight=1)
+        self.Parent = tk.Frame(highlightbackground='black', highlightthickness=2)
+        self.Parent.pack(side=tk.RIGHT, fill=tk.BOTH, expand=tk.YES)
+        self.Parent.grid_columnconfigure(0, weight=1)
+        self.Parent.grid_rowconfigure(0, weight=1, uniform="group1")
+        self.Parent.grid_rowconfigure(1, weight=1, uniform="group1")
 
         # Top frame
-        self.frameB = tk.Frame(self.Parent)
-        self.frameB.grid(sticky='nsew', padx=5, pady=5)
+        self.frameB = tk.Frame(self.Parent, highlightbackground='black', highlightthickness=1)
+        self.frameB.grid(sticky='NESW', padx=5, pady=5)
         self.canvas = tk.Canvas(master=self.frameB)
-        self.canvas.config(width=dim_canv, height=dim_canv)
-        self.canvas.pack(fill = tk.BOTH, expand=tk.YES)
+        self.canvas.config(width=350, height=200)
+        self.canvas.pack(fill=tk.BOTH, expand=tk.YES)
         self.screen = turtle.TurtleScreen(self.canvas)
         self.screen.bgcolor("white")
+
         self.my_spicy_turtle = turtle.RawTurtle(self.screen, shape="turtle", visible=False)
 
         # Bottom Frame
-        self.frameC = tk.Frame(self.Parent)
-        self.frameC.grid(sticky='nsew', padx=5, pady=5)
+        self.frameC = tk.Frame(self.Parent, highlightbackground='black', highlightthickness=1)
+        self.frameC.grid(sticky='NESW', padx=5, pady=5)
         self.canvasC = tk.Canvas(master=self.frameC)
-        self.canvasC.config(width=dim_canv, height=dim_canv)
-        self.canvasC.pack(fill = tk.BOTH, expand=tk.YES)
+        self.canvasC.config(width=350, height=200)
+        self.canvasC.pack(fill=tk.BOTH, expand=tk.YES)
         self.screenC = turtle.TurtleScreen(self.canvasC)
         self.screenC.bgcolor("white")
         self.my_ginger_turtle = turtle.RawTurtle(self.screenC, shape="turtle", visible=False)
@@ -155,7 +156,7 @@ class App:
         self.my_baby_turtle = turtle.RawTurtle(self.screenC, shape="turtle", visible=False)
         self.my_scary_turtle = turtle.RawTurtle(self.screenC, shape="turtle", visible=False)
         self.my_sporty_turtle = turtle.RawTurtle(self.screenC, shape="turtle", visible=False)
-        
+ 
     
     def draw(self, s, length, angle, stack_depth, turtle_name, animated, i, start_color, final_color):
         '''
@@ -170,9 +171,7 @@ class App:
         for character in s:
             penwidth = 5/(0.6*len(stack)+1)
             turtle_name.pensize(width=penwidth)
-            color = self.change_pen_color(stack, stack_depth, start_color, final_color)
-            turtle_name.pencolor(color) # takes r,g,b values from 0 to 1 
-            #turtle_name.pencolor(0, min(1, len(stack)/(stack_depth+1)), 0.4) # takes r,g,b values from 0 to 1
+            turtle_name.pencolor(0, min(1, len(stack)/(stack_depth+1)), 0.4) # takes r,g,b values from 0 to 1
 
             if character in string.ascii_letters:
                 turtle_name.forward(length)
@@ -275,7 +274,7 @@ class App:
     
     def reset_turtle(self, turtle_name):
         turtle_name.penup()
-        #turtle_name.hideturtle()
+        turtle_name.hideturtle()
         turtle_name.speed("fastest")
         turtle_name.pensize(width=3)
         turtle_name.goto(x=0, y= -0.4*dim_canv)
@@ -331,12 +330,13 @@ def reproduce(string, A_rule, B_rule):
             new += character
     return new
 
-def linspace(canv_dim, max_iter):
+def linspace(canv_dim, max_iter): 
+    padding = 0.2
     if max_iter < 2:
         return [0]
     else:
-        a = -0.5*canv_dim + 40
-        b = 0.5*canv_dim - 40
+        a = -0.5*canv_dim + padding*canv_dim
+        b = 0.5*canv_dim - padding*canv_dim
         diff = (b-a)/(max_iter-1)
         return [diff*i + a for i in range(max_iter)]
     
