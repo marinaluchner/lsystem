@@ -40,7 +40,7 @@ class App:
         self.description.grid(row=0, column=0, columnspan=2, rowspan=2, sticky="w")
         
         # Preset values
-        options = ["Tree", "Custom"]
+        options = ["Tree", "Custom", "Algea", "Wheat", "Bush"]
         self.axiom_label = ttk.Label(master=self.frameA, text="Select an organic structure:", font=("Arial", 12))
         self.axiom_label.grid(row=5, column=1, columnspan=2, sticky="nesw")
         self.preselects = tk.OptionMenu(self.frameA, self.clicked, *options, command=self.preset_autofill)
@@ -134,7 +134,7 @@ class App:
         self.my_sporty_turtle = turtle.RawTurtle(self.screenC, shape="turtle", visible=False)
         
     
-    def draw(self, s, length, angle, stack_depth, turtle_name, animated, i):
+    def draw(self, s, length, angle, stack_depth, turtle_name, animated, i, start_color, final_color):
         '''
         Either animates the turtle across the canvas
         or (if self.screen.tracer is switched on and off) 
@@ -147,7 +147,9 @@ class App:
         for character in s:
             penwidth = 5/(0.6*len(stack)+1)
             turtle_name.pensize(width=penwidth)
-            turtle_name.pencolor(0, min(1, len(stack)/(stack_depth+1)), 0.4) # takes r,g,b values from 0 to 1
+            color = self.change_pen_color(stack, stack_depth, start_color, final_color)
+            turtle_name.pencolor(color) # takes r,g,b values from 0 to 1 
+            #turtle_name.pencolor(0, min(1, len(stack)/(stack_depth+1)), 0.4) # takes r,g,b values from 0 to 1
 
             if character in string.ascii_letters:
                 turtle_name.forward(length)
@@ -170,6 +172,17 @@ class App:
         
         turtle_name.penup()
     
+    def change_pen_color(self, stack, stack_depth, start_color, final_color):
+
+        '''changes the color with stack_depth
+        param start_color: string, roots of the organic structure will be in this color
+        param final_color: string, leaves of the organic structure will be in this color
+        returns: tuple, rgb colors from 0 to 1'''
+        
+        deltas = [(hue - start_color[index]) / (stack_depth+1) for index, hue in enumerate(final_color)]
+        color = [start_color[index] + delta * len(stack) for index, delta in enumerate(deltas)]
+        return color
+    
     def execute(self):
 
         """ Function generating string based on user inputs
@@ -182,6 +195,12 @@ class App:
         A_rule = self.ent_ruleA.get()
         B_rule = self.ent_ruleB.get()
         axiom =  self.ent_axm.get()
+
+        
+        preset_name = str(self.clicked.get())
+        presets = preset_dict[preset_name]
+        start_color =  presets["start_color"]
+        final_color = presets["final_color"]
         
         spicy_turtles = [self.my_ginger_turtle, 
                          self.my_scary_turtle,
@@ -201,7 +220,7 @@ class App:
             self.draw(inp_string, length, angle, maxDepth(inp_string), spicy_turtles[i], True, i)
             
         inp_string = generate(axiom, max_iter,  A_rule, B_rule)
-        self.draw(inp_string, length, angle, maxDepth(inp_string), self.my_spicy_turtle, False, 0)
+        self.draw(inp_string, length, angle, maxDepth(inp_string), self.my_spicy_turtle, False, 0, start_color, final_color)
     
     def reset_turtle(self, turtle_name):
         turtle_name.penup()
@@ -275,13 +294,17 @@ preset_dict = {'Custom':   {'angle': 12,
                             'max_iter': 2,
                             'ruleA': 'B+[[A]-A]-B[-BA]+A',
                             'ruleB': 'BA',
-                            'axiom': 'A+[A]B-'},
+                            'axiom': 'A+[A]B-',
+                            'start_color': (0, 0.6, 0.3),
+                            'final_color': (0.6, 1, 1)},
                 'Tree':    {'angle': 32,
                             'length': 20,
                             'max_iter': 4,
                             'ruleA': 'B+[[A]-A]-B[-BA]+A',
                             'ruleB': 'BA',
-                            'axiom': 'A+[A]B-'},
+                            'axiom': 'A+[A]B-',
+                            'start_color': (0, 0.6, 0.3),
+                            'final_color': (0.6, 1, 1)},
                 'Algea':   {'angle': 22.5, 
                             'length': 10,
                             'max_iter': 4,
