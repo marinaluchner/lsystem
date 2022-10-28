@@ -15,7 +15,7 @@ class App:
         """
         self.master = master
         self.master.title("Raw Turtle")
-        
+
         self.clicked = StringVar()
         self.clicked.set( "Custom" )
 
@@ -28,20 +28,20 @@ class App:
         """
         Function creating and arranging widgets in left panel
         """
-        
+
         self.frameA = tk.Frame()
         self.frameA.pack(fill=tk.BOTH, side=tk.LEFT, padx=10)
-        self.frameA.rowconfigure(list(range(1,15)), minsize=20)
+        self.frameA.rowconfigure(list(range(1, 15)), minsize=20)
 
         self.frameA_upper = tk.Frame(master=self.frameA)
-        self.frameA_upper.grid(row=0, sticky="w") 
+        self.frameA_upper.grid(row=0, sticky="w")
 
         self.frameA_lower = tk.Frame(master=self.frameA)
         self.frameA_lower.columnconfigure([0, 1], minsize=40)
         self.frameA_lower.rowconfigure(list(range(1, 8)), minsize=20)
         self.frameA_lower.grid(sticky="w")
 
-        # Description
+        # Create labels for title and summary
         self.lbl_title = ttk.Label(master=self.frameA_upper,
                                    text="Welcome to the Turtle Trees Simulator!\n",
                                    font=("Helvetica", 15), justify=tk.CENTER)
@@ -61,9 +61,8 @@ class App:
 
         self.lbl_screen.grid(row=8, column=1, rowspan=2, sticky="w")
 
-        # Preset values
-
-        options = ["Tree", "Custom", "Algae", "Wheat", "Bush"]
+        # Create preset values dropdown list
+        options = ["Tree", "Algae", "Wheat", "Bush", "Custom"]
         self.axiom_label = ttk.Label(master=self.frameA_lower,
                                      text="Select an organic structure:",
                                      font=("Arial", 12))
@@ -73,21 +72,21 @@ class App:
         self.preselects.config(fg="gray")
         self.preselects.grid(row=6, column=1, columnspan=2, sticky="nesw", pady=0)
 
-        # angle input
+        # Create angle entry widgets
         self.lbl_angle = ttk.Label(master=self.frameA_lower, text="Branch angle: ")
         self.ent_angle = ttk.Entry(master=self.frameA_lower)
         self.ent_angle.insert(0, '20')
         self.lbl_angle.grid(row=7, column=0, sticky="e", pady=5)
         self.ent_angle.grid(row=7, column=1, sticky="nesw", pady=5)
 
-        # length input
+        # Create length entry widgets
         self.lbl_length = ttk.Label(master=self.frameA_lower, text="Length: ")
         self.ent_length = ttk.Entry(master=self.frameA_lower)
         self.ent_length.insert(0, '15')
         self.lbl_length.grid(row=8, column=0, sticky="e", pady=5)
         self.ent_length.grid(row=8, column=1, sticky="nesw", pady=5)
 
-        # iteractions slider
+        # Create iterations slider using ttkwidgets.TickScale
         self.scl_iters = TickScale(master=self.frameA_lower, orient='horizontal',
                                    from_=1, to=5, resolution=1,
                                    showvalue=True, length=20)
@@ -96,7 +95,7 @@ class App:
         self.scl_iters.grid(row=9, column=1, sticky="nesw", pady=5)
         self.scl_iters.set(2)
 
-        # reproduction rules
+        # Create label and entry widgets for reproduction rules
         self.rep_label = ttk.Label(master=self.frameA_lower, text="Reproduction Rules:", font=("Arial", 12))
         self.rep_label.grid(row=10, column=1,columnspan=2, sticky="nesw", pady=10)
 
@@ -112,18 +111,18 @@ class App:
         self.lbl_ruleB.grid(row=12, column=0, sticky="e", pady=5)
         self.ent_ruleB.grid(row=12, column=1, sticky="nesw", pady=5)
 
-        # Axiom 
+        # Create label and entry widgets for the initial axiom
         self.lbl_axm = ttk.Label(master=self.frameA_lower, text="Initial \nConditions", justify=tk.RIGHT)
         self.ent_axm  = ttk.Entry(master=self.frameA_lower)
         self.ent_axm.insert(0,'A+[A]B-')
         self.lbl_axm.grid(row=13, column=0, sticky="e", pady=5)
         self.ent_axm.grid(row=13, column=1, sticky="nesw", pady=5)
 
-        # Go button
+        # Create go button using Azure style Accent.TButton
         self.btn_go = ttk.Button(master=self.frameA_lower, text="Go!", command=self.execute, style="Accent.TButton")
         self.btn_go.grid(row=14, column=1, columnspan=2, sticky="nesw", pady=10)
 
-        # Error button
+        # Create error label
         self.error_caption = ttk.Label(master=self.frameA_lower, wraplength=200, text="")
         self.error_caption.grid(row=15, column=1, columnspan=2, sticky="nesw", pady=10)
 
@@ -138,7 +137,7 @@ class App:
         self.Parent.grid_rowconfigure(0, weight=1, uniform="group1")
         self.Parent.grid_rowconfigure(1, weight=1, uniform="group1")
 
-        # Top frame
+        # Top frame: draws out the final structure
         self.frameB = tk.Frame(self.Parent, highlightbackground='black', highlightthickness=1)
         self.frameB.grid(sticky='NESW', padx=5, pady=5)
         self.canvas = tk.Canvas(master=self.frameB)
@@ -149,7 +148,7 @@ class App:
 
         self.my_spicy_turtle = turtle.RawTurtle(self.screen, shape="turtle", visible=False)
 
-        # Bottom Frame
+        # Bottom Frame: static images of structure after each iteration
         self.frameC = tk.Frame(self.Parent, highlightbackground='black', highlightthickness=1)
         self.frameC.grid(sticky='NESW', padx=5, pady=5)
         self.canvasC = tk.Canvas(master=self.frameC)
@@ -163,12 +162,28 @@ class App:
         self.my_scary_turtle = turtle.RawTurtle(self.screenC, shape="turtle", visible=False)
         self.my_sporty_turtle = turtle.RawTurtle(self.screenC, shape="turtle", visible=False)
 
-
     def draw(self, s, length, angle, stack_depth, turtle_name, start_color, final_color):
         '''
         Either animates the turtle across the canvas
         or (if self.screen.tracer is switched on and off)
         immediately outputs final image.
+
+        Parameters:
+        -----------
+        s: string
+            Characters to be interpreted to draw structure
+        length: float
+            Initial branch length
+        angle: float
+            Angle (in degrees) between original and new branch
+        stack_depth: int
+            Maximum branch depth in structure
+        turtle_name: string
+            Name of the turtle that draws a given tree
+        start_color: tuple of floats (R, G, B)
+            R, G, B are floats between 0 and 1, defining RGB color values
+        final_color: tuple of floats (R, G, B)
+            R, G, B are floats between 0 and 1, defining RGB color values
         '''
 
         self.screenC.tracer(False)
@@ -178,7 +193,7 @@ class App:
             penwidth = 5/(0.6*len(stack)+1)
             turtle_name.pensize(width=penwidth)
             color = self.change_pen_color(stack, stack_depth, start_color, final_color)
-            turtle_name.pencolor(color) # takes r,g,b values from 0 to 1
+            turtle_name.pencolor(color)  # takes r,g,b values from 0 to 1
 
             if character in string.ascii_letters:
                 turtle_name.forward(length)
@@ -203,10 +218,25 @@ class App:
 
     def change_pen_color(self, stack, stack_depth, start_color, final_color):
 
-        '''changes the color with stack_depth
-        param start_color: string, roots of the organic structure will be in this color
-        param final_color: string, leaves of the organic structure will be in this color
-        returns: tuple, rgb colors from 0 to 1'''
+        '''
+        Changes the draw color with stack_depth.
+
+        Parameters:
+        -----------
+        stack: tuple of tuples ((x, y), heading))
+            Each tuple contains the current x and y position and the current heading in degrees
+        stack_depth: int
+            Maximum branch depth in structure
+        start_color: tuple of floats (R, G, B)
+            R, G, B are floats between 0 and 1, defining RGB color values
+        final_color: tuple of floats (R, G, B)
+            R, G, B are floats between 0 and 1, defining RGB color values
+
+        Returns:
+        -----------
+        color: tuple of floats (R, G, B)
+            R, G, B are floats between 0 and 1, defining RGB color values
+        '''
 
         deltas = [(hue - start_color[index]) / (stack_depth+1) for index, hue in enumerate(final_color)]
         color = [start_color[index] + delta * len(stack) for index, delta in enumerate(deltas)]
@@ -214,7 +244,9 @@ class App:
 
     def execute(self):
 
-        """ Function generating string based on user inputs
+        """
+        Generates structure representation strings based on user inputs, then draws strings.
+        Catches valid user inputs.
         """
 
         self.error_caption.config(text='') # reset error caption
@@ -285,6 +317,14 @@ class App:
         self.draw(inp_string, length, angle, maxDepth(inp_string), self.my_spicy_turtle, start_color, final_color)
 
     def reset_turtle(self, turtle_name):
+        '''
+        Returns turtle to initial position, and resets turtle properties.
+        
+        Parameters
+        ----------
+        turtle_name: string
+            Name of the turtle that draws a given tree
+        '''
         turtle_name.penup()
         turtle_name.hideturtle()
         turtle_name.speed("fastest")
@@ -293,6 +333,10 @@ class App:
         turtle_name.setheading(90)
 
     def preset_autofill(self, args):
+        '''
+        Autofills entries depending on preset option.
+        '''
+        
 
         preset_name = str(self.clicked.get())
 
@@ -313,6 +357,14 @@ class App:
 
 
 def maxDepth(inp_string):
+    '''
+    Returns maximum branch depth of given string.
+ 
+    Parameters
+    ----------
+    inp_string: string
+        String representation of structure
+    '''
     depthCount = 0
     maxCount = 0
     for character in inp_string:
@@ -326,12 +378,38 @@ def maxDepth(inp_string):
 
 
 def generate(string, max_iter, A_rule, B_rule):
+    '''
+    Generates a string of given number of iterations and rule.
+ 
+    Parameters
+    ----------
+    string: string
+        Initial string representation of structure
+    max_iter: int
+        Maximum number of iterations of reproduction
+    A_rule: string
+        'A' character is transformed into A_rule
+    B_rule: string
+        'B' character is transformed into B_rule    
+    '''
     for step in range(max_iter):
         string = reproduce(string, A_rule, B_rule)
     return string
 
 
 def reproduce(string, A_rule, B_rule):
+    '''
+    Reproduces given string according to given rules.
+    
+    Parameters
+    ----------
+    string: string
+        Initial string representation of structure
+    A_rule: string
+        'A' character is transformed into A_rule
+    B_rule: string
+        'B' character is transformed into B_rule
+    '''
     new = ''
     for character in string:
         if character == 'A':
@@ -344,6 +422,16 @@ def reproduce(string, A_rule, B_rule):
 
 
 def linspace(canv_dim, max_iter):
+    '''
+    Linearly spaces max_iter points across canv_dim 
+
+    Parameters
+    ----------
+    canv_dim: float
+        Dimension of the canvas
+    max_iter: integer
+        Maximum number of iterations
+    '''
     padding = 0.3
     if max_iter < 2:
         return [0]
@@ -355,15 +443,19 @@ def linspace(canv_dim, max_iter):
 
 
 def invalid_chars(test_str):
-    """Check all characters in reproduction rule entries are in the valid character set
+    '''
+    Check all characters in reproduction rule entries are in the valid character set
 
-       Args: test_str, String to be checked
+    Parameters:
+    -----------
+    test_str: string
+        String representation to be checked
 
-       Returns:
-            True if invalid characters are enterd
-            False if all characters are valid
-
-    """
+    Returns:
+    -----------
+        True if invalid characters are enterd
+        False if all characters are valid
+    '''
     return not set(test_str) <= {'A', 'B', '+', '-', '[', ']'}
 
 preset_dict = {'Custom':   {'angle': 12,

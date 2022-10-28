@@ -5,6 +5,22 @@ A simulator to visualise different organic systems using [L-systems](https://en.
 
 You can select different presets, or make your own custom structure!
 
+Running Turtle Trees
+=========================
+
+You can download the executable files for your OS (Windows, Mac or Ubuntu) from this repository.
+In Ubuntu you may need to set the file as an executable:
+
+```bash
+chmod +x turtletrees_ubuntu
+```
+Alternatively, you can clone the repository, install the dependencies from requirements.txt and execute the core.py file:
+
+```bash
+pip install -r requirements.txt
+python3 turtletrees/core.py
+```
+
 Useful links
 ==========================
 

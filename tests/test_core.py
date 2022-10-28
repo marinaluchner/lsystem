@@ -4,6 +4,15 @@ import unittest
 import random
 import tkinter as tk
 
+class ColorTest(unittest.TestCase):
+
+    def test_change_pen_color(self):
+        """ Test change_pen_color function using tree preset"""
+        stack = [((71.20,-139.20), 70.0)]
+        stack_depth = 1
+        root = tk.Tk()
+        app = App(root)
+        self.assertEqual(app.change_pen_color(stack, stack_depth, start_color = (0.6, 0.3, 0), final_color = (0.4, 1, 0.4)), [0.5, 0.6499999999999999, 0.2])    
 
 class TheoryTest(unittest.TestCase):
     """
