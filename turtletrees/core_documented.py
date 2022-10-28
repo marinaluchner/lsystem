@@ -5,6 +5,9 @@ import tkinter as tk
 from ttkwidgets import TickScale
 
 dim_canv = 500
+
+# TODO: lbl_title
+
 class App:
     def __init__(self, master):
         
@@ -35,20 +38,28 @@ class App:
         self.frameA.rowconfigure(list(range(1,16)), minsize=20) 
         
         # Description 
-        self.description = ttk.Label(master=self.frameA, 
-            text="Welcome to the Turtle Trees Simulator!", font=("Arial", 13), justify=tk.CENTER)
-        self.description.grid(row=0, column=0, columnspan=2, rowspan=2, sticky="w")
+        self.lbl_title = ttk.Label(master=self.frameA,
+                                     text="Welcome to the Turtle Trees Simulator!", font=("Helvetica", 15), justify=tk.CENTER)
+        self.lbl_title.grid(row=0, column=1, rowspan=2, sticky="w")
+
+        self.lbl_description = ttk.Label(master=self.frameA,
+                                         text="This models different organic systems using L-systems.\
+                                         \nSelect an example structure, or play with your own custom system!\
+                                         \n\nAngle (°): Angle between old and new branches\
+                                         \nLength: Branch length\
+                                         \nIterations: Number of growth steps")
+        self.lbl_description.grid(row=3, column=1, rowspan=2, sticky="w")
         
         # Preset values
         options = ["Tree", "Custom"]
-        self.axiom_label = ttk.Label(master=self.frameA, text="Select an organic structure:", font=("Arial", 12))
-        self.axiom_label.grid(row=5, column=1, columnspan=2, sticky="nesw")
+        self.axiom_label = ttk.Label(master=self.frameA, text="Select an organic structure:", font=("Helvetica", 13,))
+        self.axiom_label.grid(row=5, column=1, sticky="nesw")
         self.preselects = tk.OptionMenu(self.frameA, self.clicked, *options, command=self.preset_autofill)
         # TODO: use ttk.OptionMenu instead, but this makes first dropdown option disappear
-        self.preselects.grid(row=6, column=1,columnspan=2, sticky="nesw", pady=10)
+        self.preselects.grid(row=6, column=1, sticky="nesw", pady=10)
         
         # angle input
-        self.lbl_angle = ttk.Label(master=self.frameA, text="Angle: ")
+        self.lbl_angle = ttk.Label(master=self.frameA, text="Angle (°): ")
         self.ent_angle = ttk.Entry(master=self.frameA)
         self.ent_angle.insert(0, '20')
         self.lbl_angle.grid(row=7, column=0, sticky="e", pady=5)
@@ -70,8 +81,8 @@ class App:
         self.scl_iters.grid(row=9, column=1, sticky="nesw", pady=5)
         
         # reproduction rules
-        self.rep_label = ttk.Label(master=self.frameA, text="Reproduction Rules:", font=("Arial", 12))
-        self.rep_label.grid(row=10, column=1,columnspan=2, sticky="nesw", pady=10)
+        self.rep_label = ttk.Label(master=self.frameA, text="Reproduction Rules:", font=("Helvetica", 13))
+        self.rep_label.grid(row=10, column=1, sticky="nesw", pady=10)
         
         self.lbl_ruleA = ttk.Label(master=self.frameA, text="A → ")
         self.ent_ruleA = ttk.Entry(master=self.frameA)
@@ -94,7 +105,7 @@ class App:
         
         # Go button
         self.btn_go = ttk.Button(master=self.frameA, text="Go!", command=self.execute, style="Accent.TButton")
-        self.btn_go.grid(row=14, column=1, columnspan=2, sticky="nesw", pady=10)
+        self.btn_go.grid(row=14, column=1, sticky="nesw", pady=10)
     
     def create_turtle_screen(self):
         
@@ -289,7 +300,7 @@ preset_dict = {'Custom':   {'angle': 12,
                             'ruleB': 'B',
                             'axiom': 'A',
                             'start_color': (0, 0.6, 0.3),
-                            'final_color': (0.6, 1, 1)},
+                            'final_color': (0.6, 1)},
                 'Wheat':   {'angle': 10, 
                             'length': 10,
                             'max_iter': 4,
@@ -297,7 +308,7 @@ preset_dict = {'Custom':   {'angle': 12,
                             'ruleB': 'A[+B][-B]',
                             'axiom': 'AB',
                             'start_color': (0.8, 0.4, 0),
-                            'final_color': (1, 1, 0.6)},
+                            'final_color': (1, 0.6)},
                 'Bush':    {'angle': 25,
                             'length': 10,
                             'max_iter': 5,
@@ -305,7 +316,7 @@ preset_dict = {'Custom':   {'angle': 12,
                             'ruleB': 'B[-B][+[+A]][-[-B]]',
                             'axiom': 'AB',
                             'start_color': (0.6, 0.3, 0),
-                            'final_color': (0.4, 1, 0.4)}
+                            'final_color': (0.4, 0.4)}
 }
 
 
@@ -314,6 +325,6 @@ if __name__ == '__main__':
     # Set theme and font
     root.tk.call("source", "Azure-ttk-theme-main/azure.tcl")
     root.tk.call("set_theme", "dark")
-    root.option_add('*Font', 'Helvetica 10')
+    root.option_add('*Font', 'Helvetica 12')
     app = App(root)
     root.mainloop()
