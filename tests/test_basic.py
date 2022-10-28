@@ -1,11 +1,13 @@
 from turtletrees import core
+from turtletrees.core import App
 import unittest
 import random
+import tkinter as tk
 
 
 class TheoryTest(unittest.TestCase):
     """
-    Tests theoretical non-GUI methods of App class
+    Tests L-system functions
     """
     def test_reproduce(self):
         """ Tests reproduce function using tree preset"""
@@ -27,3 +29,9 @@ class TheoryTest(unittest.TestCase):
         """ Tests maxDepth function using tree present output (max_iter=2) """
         self.assertEqual(core.maxDepth('BA+[[B+[[A]-A]-B[-BA]+A]-B+[[A]-A]-B[-BA]+A]-BA[-BAB+[[A]-A]-B[-BA]+A]+B+[[A]-A]-B[-BA]+A+[BA+[[B+[[A]-A]-B[-BA]+A]-B+[[A]-A]-B[-BA]+A]-BA[-BAB+[[A]-A]-B[-BA]+A]+B+[[A]-A]-B[-BA]+A]BAB+[[A]-A]-B[-BA]+A-'),
                          5)
+
+class AppTest(unittest.TestCase):
+    
+    def test_create(self):
+        root = tk.Tk()
+        app = App(root)
