@@ -12,7 +12,7 @@ You can download the executable files for your OS (Windows, Mac or Ubuntu) from 
 In Ubuntu you may need to set the file an executable:
 
 ```bash
-chmod +x turtletrees
+chmod +x turtletrees_ubuntu
 ```
 Alternatively, you can clone the repository, install the dependencies from requirements.txt and execute the core.py file:
 
