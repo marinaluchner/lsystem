@@ -218,7 +218,7 @@ class App:
         for i in range(max_iter):
             spicy_turtles[i].goto(x=offset[i], y=-0.4*dim_canv )
             inp_string = generate(axiom, i,  A_rule, B_rule)
-            self.draw(inp_string, length, angle, maxDepth(inp_string), spicy_turtles[i], True, i)
+            self.draw(inp_string, length, angle, maxDepth(inp_string), spicy_turtles[i], True, i, start_color, final_color)
             
         inp_string = generate(axiom, max_iter,  A_rule, B_rule)
         self.draw(inp_string, length, angle, maxDepth(inp_string), self.my_spicy_turtle, False, 0, start_color, final_color)
