@@ -1,6 +1,13 @@
 Turtle Trees
 ========================
 
+A simulator to visualise different organic systems using [L-systems](https://en.wikipedia.org/wiki/L-system).
+
+You can select different presets, or make your own custom structure!
+
+Useful links
+==========================
+
 Sabs project homepage:
 https://sabs-r3.github.io/software-engineering-project2/01-introduction/index.html
 
