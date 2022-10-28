@@ -36,9 +36,9 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
           
       # Can comment out Upload job to prevent producing many files (Github files storage limits)
-      # - name: Upload
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: ${{ matrix .os }} build
-      #     path: dist/
+      - name: Upload
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix .os }} build
+          path: dist/
 
