@@ -41,7 +41,7 @@ class App:
         self.frameA_lower.rowconfigure(list(range(1, 8)), minsize=20)
         self.frameA_lower.grid(sticky="w")
 
-        # Description
+        # Create labels for title and summary
         self.lbl_title = ttk.Label(master=self.frameA_upper,
                                      text="Welcome to the Turtle Trees Simulator!\n", font=("Helvetica", 15), justify=tk.CENTER)
         self.lbl_title.grid(row=0, column=1, rowspan=2, sticky="w")
@@ -57,8 +57,7 @@ class App:
                                        font=("Helvetica", 12, "italic"))
         self.lbl_variables.grid(row=8, column=1, rowspan=2, sticky="w")
 
-        # Preset values
-
+        # Create preset values dropdown list
         options = ["Tree", "Algae", "Wheat", "Bush", "Custom"]
         self.axiom_label = ttk.Label(master=self.frameA_lower, text="Select an organic structure:", font=("Arial", 12))
         self.axiom_label.grid(row=5, column=1, columnspan=2, sticky="nesw")
@@ -67,21 +66,21 @@ class App:
         self.preselects.config(fg="gray")
         self.preselects.grid(row=6, column=1, columnspan=2, sticky="nesw", pady=10)
 
-        # angle input
+        # Create angle entry widgets
         self.lbl_angle = ttk.Label(master=self.frameA_lower, text="Angle: ")
         self.ent_angle = ttk.Entry(master=self.frameA_lower)
         self.ent_angle.insert(0, '20')
         self.lbl_angle.grid(row=7, column=0, sticky="e", pady=5)
         self.ent_angle.grid(row=7, column=1, sticky="nesw", pady=5)
 
-        # length input
+        # Create length entry widgets
         self.lbl_length = ttk.Label(master=self.frameA_lower, text="Length: ")
         self.ent_length = ttk.Entry(master=self.frameA_lower)
         self.ent_length.insert(0, '15')
         self.lbl_length.grid(row=8, column=0, sticky="e", pady=5)
         self.ent_length.grid(row=8, column=1, sticky="nesw", pady=5)
 
-        # iteractions slider
+        # Create iterations slider using ttkwidgets.TickScale
         self.scl_iters = TickScale(master=self.frameA_lower, orient='horizontal',
                from_=1, to=5, resolution=1,
                showvalue=True, length=20)
@@ -90,7 +89,7 @@ class App:
         self.scl_iters.grid(row=9, column=1, sticky="nesw", pady=5)
         self.scl_iters.set(2)
 
-        # reproduction rules
+        # Create label and entry widgets for reproduction rules
         self.rep_label = ttk.Label(master=self.frameA_lower, text="Reproduction Rules:", font=("Arial", 12))
         self.rep_label.grid(row=10, column=1,columnspan=2, sticky="nesw", pady=10)
 
@@ -106,18 +105,18 @@ class App:
         self.lbl_ruleB.grid(row=12, column=0, sticky="e", pady=5)
         self.ent_ruleB.grid(row=12, column=1, sticky="nesw", pady=5)
 
-        # Axiom 
+        # Create label and entry widgets for the initial axiom
         self.lbl_axm = ttk.Label(master=self.frameA_lower, text="Initial \nConditions", justify=tk.RIGHT)
         self.ent_axm  = ttk.Entry(master=self.frameA_lower)
         self.ent_axm.insert(0,'A+[A]B-')
         self.lbl_axm.grid(row=13, column=0, sticky="e", pady=5)
         self.ent_axm.grid(row=13, column=1, sticky="nesw", pady=5)
 
-        # Go button
+        # Create go button using Azure style Accent.TButton
         self.btn_go = ttk.Button(master=self.frameA_lower, text="Go!", command=self.execute, style="Accent.TButton")
         self.btn_go.grid(row=14, column=1, columnspan=2, sticky="nesw", pady=10)
 
-        # Error button
+        # Create error label
         self.error_caption = ttk.Label(master=self.frameA_lower, wraplength=200, text="")
         self.error_caption.grid(row=15, column=1, columnspan=2, sticky="nesw", pady=10)
 
@@ -132,7 +131,7 @@ class App:
         self.Parent.grid_rowconfigure(0, weight=1, uniform="group1")
         self.Parent.grid_rowconfigure(1, weight=1, uniform="group1")
 
-        # Top frame
+        # Top frame: draws out the final structure
         self.frameB = tk.Frame(self.Parent, highlightbackground='black', highlightthickness=1)
         self.frameB.grid(sticky='NESW', padx=5, pady=5)
         self.canvas = tk.Canvas(master=self.frameB)
@@ -143,7 +142,7 @@ class App:
 
         self.my_spicy_turtle = turtle.RawTurtle(self.screen, shape="turtle", visible=False)
 
-        # Bottom Frame
+        # Bottom Frame: static images of structure after each iteration
         self.frameC = tk.Frame(self.Parent, highlightbackground='black', highlightthickness=1)
         self.frameC.grid(sticky='NESW', padx=5, pady=5)
         self.canvasC = tk.Canvas(master=self.frameC)
@@ -163,6 +162,15 @@ class App:
         Either animates the turtle across the canvas
         or (if self.screen.tracer is switched on and off)
         immediately outputs final image.
+
+        Parameters:
+        -----------
+        s: string
+            Characters to be interpreted to draw structure
+        length: float
+            Initial branch length
+        angle: float
+            Angle (in de 
         '''
 
         self.screenC.tracer(False)
