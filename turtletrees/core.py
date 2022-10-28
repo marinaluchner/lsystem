@@ -114,13 +114,16 @@ class App:
         # Go button
         self.btn_go = ttk.Button(master=self.frameA_lower, text="Go!", command=self.execute, style="Accent.TButton")
         self.btn_go.grid(row=14, column=1, columnspan=2, sticky="nesw", pady=10)
+        
+        # Error button
+        self.error_caption = ttk.Label(master=self.frameA_lower, text="")
+        self.error_caption.grid(row=15, column=1, columnspan=2, sticky="nesw", pady=10)
     
     def create_turtle_screen(self):
         
         """
         Function initializing turtle screen
         """
-        
         
         # Parent frame
         self.Parent = tk.Frame()
@@ -207,15 +210,43 @@ class App:
         """ Function generating string based on user inputs
         """
         
-        ############## get values from inputs
-        angle = float(self.ent_angle.get())
-        length = float(self.ent_length.get())
-        max_iter = int(self.scl_iters.get())
+        self.error_caption.config(text= '') # reset error caption
+        
+        # get values from inputs
+        # and catch input errors - display error below Go button
+        try:
+            angle = float(self.ent_angle.get())
+        except ValueError:
+            self.error_caption.config(text="Invalid angle entry. Please enter a numerical angle.")
+            return
+        try: 
+            length = float(self.ent_length.get())
+        except ValueError:
+            self.error_caption.config(text="Invalid length entry. Please enter a numerical length.")
+            return
+        try:
+            max_iter = int(self.scl_iters.get())
+        except ValueError:
+            self.error_caption.config(text="Invalid iterations entry. Please enter an integer value.")
+            return
+        
         A_rule = self.ent_ruleA.get()
         B_rule = self.ent_ruleB.get()
         axiom =  self.ent_axm.get()
-
         
+        if invalid_chars(A_rule) or len(A_rule) == 0:
+            self.error_caption.config(text=
+                 "Invalid A reproduction rule entry.\n Please only use the following characters: 'A', 'B' ,'+', '-', '[', ']'.")
+            return
+        if invalid_chars(B_rule) or len(B_rule) == 0:
+            self.error_caption.config(text=
+                 "Invalid B reproduction rule entry.\n Please only use the following characters: 'A', 'B' ,'+', '-', '[', ']'.")
+            return
+        if invalid_chars(axiom) or len(axiom) == 0:
+            self.error_caption.config(text=
+                 "Invalid initial conditions entry.\n Please only use the following characters: 'A', 'B' ,'+', '-', '[', ']'.")
+            return
+
         preset_name = str(self.clicked.get())
         presets = preset_dict[preset_name]
         start_color =  presets["start_color"]
@@ -307,6 +338,19 @@ def linspace(canv_dim, max_iter):
         b = 0.5*canv_dim - 40
         diff = (b-a)/(max_iter-1)
         return [diff*i + a for i in range(max_iter)]
+    
+
+def invalid_chars(test_str):
+    """Check all characters in reproduction rule entries are in the valid character set
+       
+       Args: test_str, String to be checked
+       
+       Returns:
+            True if invalid characters are enterd
+            False if all characters are valid
+        
+    """
+    return not set(test_str) <= {'A','B', '+', '-', '[', ']'}
         
 preset_dict = {'Custom':   {'angle': 12,
                             'length': 10,
