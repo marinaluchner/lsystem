@@ -9,7 +9,7 @@ Running Turtle Trees
 =========================
 
 You can download the executable files for your OS (Windows, Mac or Ubuntu) from this repository.
-In Ubuntu you may need to set the file an executable:
+In Ubuntu you may need to set the file as an executable:
 
 ```bash
 chmod +x turtletrees_ubuntu
