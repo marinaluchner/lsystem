@@ -4,7 +4,7 @@ from tkinter import StringVar, ttk
 import tkinter as tk
 from ttkwidgets import TickScale
 
-dim_canv = 500
+canv_dim = 500
 class App:
     def __init__(self, master):
 
@@ -158,7 +158,7 @@ class App:
         self.my_sporty_turtle = turtle.RawTurtle(self.screenC, shape="turtle", visible=False)
 
 
-    def draw(self, s, length, angle, stack_depth, turtle_name, animated, i, start_color, final_color):
+    def draw(self, s, length, angle, stack_depth, turtle_name, start_color, final_color):
         '''
         Either animates the turtle across the canvas
         or (if self.screen.tracer is switched on and off)
@@ -171,7 +171,8 @@ class App:
         for character in s:
             penwidth = 5/(0.6*len(stack)+1)
             turtle_name.pensize(width=penwidth)
-            turtle_name.pencolor(0, min(1, len(stack)/(stack_depth+1)), 0.4) # takes r,g,b values from 0 to 1
+            color = self.change_pen_color(stack, stack_depth, start_color, final_color)
+            turtle_name.pencolor(color) # takes r,g,b values from 0 to 1
 
             if character in string.ascii_letters:
                 turtle_name.forward(length)
@@ -263,21 +264,21 @@ class App:
             self.reset_turtle(turt)
             turt.clear()
 
-        offset = linspace(dim_canv, max_iter)
+        offset = linspace(canv_dim, max_iter)
         for i in range(max_iter):
-            spicy_turtles[i].goto(x=offset[i], y=-0.4*dim_canv )
-            inp_string = generate(axiom, i,  A_rule, B_rule)
-            self.draw(inp_string, length, angle, maxDepth(inp_string), spicy_turtles[i], True, i, start_color, final_color)
+            spicy_turtles[i].goto(x=offset[i], y=-0.4*canv_dim)
+            inp_string = generate(axiom, i+1,  A_rule, B_rule)
+            self.draw(inp_string, length, angle, maxDepth(inp_string), spicy_turtles[i], start_color, final_color)
 
         inp_string = generate(axiom, max_iter,  A_rule, B_rule)
-        self.draw(inp_string, length, angle, maxDepth(inp_string), self.my_spicy_turtle, False, 0, start_color, final_color)
+        self.draw(inp_string, length, angle, maxDepth(inp_string), self.my_spicy_turtle, start_color, final_color)
 
     def reset_turtle(self, turtle_name):
         turtle_name.penup()
         turtle_name.hideturtle()
         turtle_name.speed("fastest")
         turtle_name.pensize(width=3)
-        turtle_name.goto(x=0, y= -0.4*dim_canv)
+        turtle_name.goto(x=0, y= -0.4*canv_dim)
         turtle_name.setheading(90)
 
     def preset_autofill(self, args):
@@ -331,8 +332,8 @@ def reproduce(string, A_rule, B_rule):
     return new
 
 
-def linspace(canv_dim, max_iter): 
-    padding = 0.2
+def linspace(canv_dim, max_iter):
+    padding = 0.3
     if max_iter < 2:
         return [0]
     else:
@@ -352,7 +353,7 @@ def invalid_chars(test_str):
             False if all characters are valid
 
     """
-    return not set(test_str) <= {'A','B', '+', '-', '[', ']'}
+    return not set(test_str) <= {'A', 'B', '+', '-', '[', ']'}
 
 preset_dict = {'Custom':   {'angle': 12,
                             'length': 10,
@@ -379,7 +380,7 @@ preset_dict = {'Custom':   {'angle': 12,
                             'start_color': (0, 0.6, 0.3),
                             'final_color': (0.6, 1, 1)},
                 'Wheat':   {'angle': 10,
-                            'length': 20,
+                            'length': 40,
                             'max_iter': 4,
                             'ruleA': 'B[[+A]+B][[-A]-B]',
                             'ruleB': 'A[+B][-B]',
@@ -387,7 +388,7 @@ preset_dict = {'Custom':   {'angle': 12,
                             'start_color': (0.8, 0.4, 0),
                             'final_color': (1, 1, 0.6)},
                 'Bush':    {'angle': 25,
-                            'length': 10,
+                            'length': 40,
                             'max_iter': 5,
                             'ruleA': 'A[-A][+[+A]][-[-A]]',
                             'ruleB': 'B[-B][+[+A]][-[-B]]',
