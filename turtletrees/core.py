@@ -87,6 +87,7 @@ class App:
         self.lbl_iters = ttk.Label(master=self.frameA_lower, text="Iterations: ")
         self.lbl_iters.grid(row=9, column=0, sticky="e", pady=5)
         self.scl_iters.grid(row=9, column=1, sticky="nesw", pady=5)
+        self.scl_iters.set(2)
         
         # reproduction rules
         self.rep_label = ttk.Label(master=self.frameA_lower, text="Reproduction Rules:", font=("Arial", 12))
@@ -116,7 +117,7 @@ class App:
         self.btn_go.grid(row=14, column=1, columnspan=2, sticky="nesw", pady=10)
         
         # Error button
-        self.error_caption = ttk.Label(master=self.frameA_lower, text="")
+        self.error_caption = ttk.Label(master=self.frameA_lower, wraplength=200, text="")
         self.error_caption.grid(row=15, column=1, columnspan=2, sticky="nesw", pady=10)
     
     def create_turtle_screen(self):
