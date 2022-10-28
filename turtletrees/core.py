@@ -47,7 +47,7 @@ class App:
         self.lbl_title.grid(row=0, column=1, rowspan=2, sticky="w")
 
         self.lbl_description = ttk.Label(master=self.frameA_upper,
-                                         wraplength=400,
+                                         wraplength=350,
                                          text="This models different organic systems using L-systems. Select an example structure, or play with your own custom system!\n")
         self.lbl_description.grid(row=4, column=1, rowspan=2, sticky="w")
 
@@ -266,7 +266,7 @@ class App:
 
         offset = linspace(canv_dim, max_iter)
         for i in range(max_iter):
-            spicy_turtles[i].goto(x=offset[i], y=-0.4*canv_dim)
+            spicy_turtles[i].goto(x=offset[i], y=-0.5*canv_dim)
             inp_string = generate(axiom, i+1,  A_rule, B_rule)
             self.draw(inp_string, length, angle, maxDepth(inp_string), spicy_turtles[i], start_color, final_color)
 
@@ -278,7 +278,7 @@ class App:
         turtle_name.hideturtle()
         turtle_name.speed("fastest")
         turtle_name.pensize(width=3)
-        turtle_name.goto(x=0, y= -0.4*canv_dim)
+        turtle_name.goto(x=0, y=-0.5*canv_dim)
         turtle_name.setheading(90)
 
     def preset_autofill(self, args):
@@ -363,11 +363,11 @@ preset_dict = {'Custom':   {'angle': 12,
                             'axiom': 'A+[A]B-',
                             'start_color': (0, 0.6, 0.3),
                             'final_color': (0.6, 1, 1)},
-                'Tree':    {'angle': 32,
+                'Tree':    {'angle': 19,
                             'length': 20,
                             'max_iter': 4,
-                            'ruleA': 'B+[[A]-A]-B[-BA]+A',
-                            'ruleB': 'BA',
+                            'ruleA': 'B[[AAA]A]-B[-BA]+A',
+                            'ruleB': 'A[+BB]',
                             'axiom': 'A+[A]B-',
                             'start_color': (0, 0.6, 0.3),
                             'final_color': (0.6, 1, 1)},
@@ -388,7 +388,7 @@ preset_dict = {'Custom':   {'angle': 12,
                             'start_color': (0.8, 0.4, 0),
                             'final_color': (1, 1, 0.6)},
                 'Bush':    {'angle': 25,
-                            'length': 40,
+                            'length': 35,
                             'max_iter': 5,
                             'ruleA': 'A[-A][+[+A]][-[-A]]',
                             'ruleB': 'B[-B][+[+A]][-[-B]]',
